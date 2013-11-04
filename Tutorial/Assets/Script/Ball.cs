@@ -12,4 +12,8 @@ public class Ball : MonoBehaviour {
 	void Update () {
 	
 	}
+	// executed when the ball is out of screen
+	void OnBecameInvisible() {
+		Destroy(this.gameObject);	
+	}
 }
