@@ -44,9 +44,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Ball.cs" />
-     <Compile Include="Assets\Launch.cs" />
-     <Compile Include="Assets\SelectedWithMouse.cs" />
+     <Compile Include="Assets\Script\Ball.cs" />
+     <Compile Include="Assets\Script\Decide_First_Velocity.cs" />
+     <Compile Include="Assets\Script\Launch.cs" />
+     <Compile Include="Assets\Script\SelectedWithMouse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
