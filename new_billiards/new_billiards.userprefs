@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Ball.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Ball.cs">
     <Files>
-      <File FileName="Assets/Ball.cs" Line="15" Column="48" />
-      <File FileName="Assets/SelectedWithMouse.cs" Line="17" Column="4" />
+      <File FileName="Assets/Script/SelectedWithMouse.cs" Line="23" Column="4" />
+      <File FileName="Assets/Script/Ball.cs" Line="24" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
