@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Ball : MonoBehaviour {
 
-	// Use this for initialization
 	private bool selected = false;
 	private Vector3 screenPoint;
+	public int hp;
+	// Use this for initialization
 	void Start () {
 		
 	}
@@ -24,6 +25,13 @@ public class Ball : MonoBehaviour {
 			first_velocity.y = 0.5f;
 			this.rigidbody.velocity = first_velocity;
 			selected = false;
+		}
+	}
+	void SetColor(int x) {
+		if (x==0) {
+			this.renderer.material.color = Color.red;	
+		} else {
+			this.renderer.material.color = Color.blue;	
 		}
 	}
 }
