@@ -6,38 +6,39 @@ public class  GameController : MonoBehaviour {
 	public GameObject ball_prefab;
 	public GUIText hp_text;
 	//team_A's Ball
-	public GameObject[] team_A = new GameObject[4];
-	public GUIText[] team_A_hps = new GUIText[4];
-	//team_B's Ball
-	public GameObject[] team_B = new GameObject[4];
+	public GameObject[] a = new GameObject[4];
+	public int[] a_hp = {100,200,300,400};
+	public GUIText[] a_hp_text = new GUIText[4];
+	//team_B's Information
+	public GameObject[] b = new GameObject[4];
+	public int[] b_hp = {100,200,300,400};
+	public GUIText[] b_hp_text = new GUIText[4];
+	
 	//my original method
 	GameObject make_ball(int x, int z) {
 		return Instantiate(ball_prefab, new Vector3(x,0.5f,z),Quaternion.identity) as GameObject;
 	}
-	//GUIText make_hp(double x, double y) {
-	//	return Instantiate(hp_text, new Vector3(x,y,0.0f),Quaternion.identity) as GUIText;
-	//}
+	
 	// Use this for initialization
 	void Start () {
 		//team_A's instantiation
 		for (int i=0;i<4;i++){
-			team_A[i] = this.make_ball(5,i);
-			//team_A_hps[i] = make_hp(0.15f+0.05f*i,0.15);
-			team_A_hps[i] = Instantiate(hp_text, new Vector3(0.15f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
-
-			team_A_hps[i].text = (100 * (i+1)).ToString();
-			team_A[i].renderer.material.color = Color.red;
-			Ball ballscript = team_A[i].GetComponent<Ball>();
-			ballscript.hp = 100 * i;
+			a[i] = this.make_ball(5,i);
+			a_hp_text[i] = Instantiate(hp_text, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
+			a_hp_text[i].text = a_hp[i].ToString();
+			a[i].renderer.material.color = Color.red;
+			Ball ballscript = a[i].GetComponent<Ball>();
+			ballscript.hp = a_hp[i];
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
-			team_B[i] = this.make_ball(-5,i);
-			team_B[i].renderer.material.color = Color.blue;
-			Ball ballscript = team_A[i].GetComponent<Ball>();
-			ballscript.hp = 100 * i;
+			b[i] = this.make_ball(-5,i);
+			b_hp_text[i] = Instantiate(hp_text, new Vector3(0.55f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
+			b_hp_text[i].text = b_hp[i].ToString();
+			b[i].renderer.material.color = Color.blue;
+			Ball ballscript = b[i].GetComponent<Ball>();
+			ballscript.hp = b_hp[i];
 		}
-		//show hp below
 	}
 	
 	// Update is called once per frame
