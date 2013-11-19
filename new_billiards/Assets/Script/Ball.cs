@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour {
 	private bool selected = false;
 	private Vector3 screenPoint;
 	public int hp;
+	public int attack;
 	// Use this for initialization
 	void Start () {
 		
@@ -32,6 +33,14 @@ public class Ball : MonoBehaviour {
 			this.renderer.material.color = Color.red;	
 		} else {
 			this.renderer.material.color = Color.blue;	
+		}
+	}
+	
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.tag == "Ball") {
+			GameObject another_ball_prefab = collision.gameObject;
+			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
+			another_ball.hp = another_ball.hp - this.attack;
 		}
 	}
 }
