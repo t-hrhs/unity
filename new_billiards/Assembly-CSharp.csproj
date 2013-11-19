@@ -46,7 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\Script\Ball.cs" />
      <Compile Include="Assets\Script\Decide_First_Velocity.cs" />
-     <Compile Include="Assets\Script\Launch.cs" />
+     <Compile Include="Assets\Script\GameController.cs" />
      <Compile Include="Assets\Script\SelectedWithMouse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
