@@ -7,17 +7,17 @@ public class  GameController : MonoBehaviour {
 	public static bool select_ok = true;
 	public GUIText hp_text;
 	//team_A's Ball
-	public GameObject[] a = new GameObject[4];
-	public int[] a_hp = {100,200,300,400};
-	public int[] a_attack = {10,10,10,10};
-	public GUIText[] a_hp_text = new GUIText[4];
+	public GameObject[] a = {null,null,null,null};
+	private int[] a_hp = {100,200,300,400};
+	private int[] a_attack = {10,10,10,10};
+	private GUIText[] a_hp_text = new GUIText[4];
 	//team_B's Information
 	public GameObject[] b = new GameObject[4];
-	public int[] b_hp = {100,200,300,400};
-	public int[] b_attack = {20,20,20,20};
-	public GUIText[] b_hp_text = new GUIText[4];
+	private int[] b_hp = {100,200,300,400};
+	private int[] b_attack = {20,20,20,20};
+	private GUIText[] b_hp_text = new GUIText[5];
 	//hole's information
-	public Vector3[] hall_points = {
+	private Vector3[] hall_points = {
 		new Vector3(-11.5f,0.5f,5.3f),
 		new Vector3(-11.5f,0.5f,-5.3f),
 		new Vector3(0.0f,0.5f,5.3f),
@@ -37,7 +37,7 @@ public class  GameController : MonoBehaviour {
 		for (int i=0;i<4;i++){
 			a[i] = this.make_ball(5,i);
 			a_hp_text[i] = Instantiate(hp_text, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
-			a_hp_text[i].text = a_hp[i].ToString();
+			//a_hp_text[i].text = a_hp[i].ToString();
 			a[i].renderer.material.color = Color.red;
 			Ball ballscript = a[i].GetComponent<Ball>();
 			ballscript.hp = a_hp[i];
