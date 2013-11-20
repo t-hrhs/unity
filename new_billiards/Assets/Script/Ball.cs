@@ -15,11 +15,11 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-		if (this.gameObject == SelectedWithMouse.selectedGameObject) {
+		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.renderer.material.color ==  GameController.selected_ball_color) {
 			selected = true;
 			SelectedWithMouse.selectedGameObject = null;
 		}
-		else if (Input.GetMouseButtonUp(0) && selected){
+		else if (Input.GetMouseButtonUp(0) && selected && this.renderer.material.color ==  GameController.selected_ball_color){
 			GameController.select_ok = false;
 			selected = false;
 			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
@@ -29,16 +29,9 @@ public class Ball : MonoBehaviour {
 			this.rigidbody.velocity = first_velocity;
 		}
 	}
-	void SetColor(int x) {
-		if (x==0) {
-			this.renderer.material.color = Color.red;	
-		} else {
-			this.renderer.material.color = Color.blue;	
-		}
-	}
 	
 	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.tag == "Ball") {
+		if (collision.gameObject.tag == "Ball" && collision.gameObject.renderer.material.color !=  GameController.selected_ball_color) {
 			GameObject another_ball_prefab = collision.gameObject;
 			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
 			another_ball.hp = another_ball.hp - this.attack;

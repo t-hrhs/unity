@@ -17,12 +17,11 @@ public class SelectedWithMouse : MonoBehaviour {
 	}
 	//Get mouse information
 	void get_touched_object_by_mouse(){
-		if (Input.GetMouseButtonDown(0)) {
-			Debug.Log("left click");
+		if (Input.GetMouseButtonDown(0)) {;
 			Ray ray;
 			RaycastHit hit = new RaycastHit();
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray,out hit)) {
+			if (Physics.Raycast(ray,out hit) && hit.collider.gameObject.renderer.material.color == GameController.selected_ball_color) {
 				selectedGameObject = hit.collider.gameObject;	
 			} else {
 				selectedGameObject = null;	
