@@ -20,12 +20,13 @@ public class Ball : MonoBehaviour {
 			SelectedWithMouse.selectedGameObject = null;
 		}
 		else if (Input.GetMouseButtonUp(0) && selected){
+			GameController.select_ok = false;
+			selected = false;
 			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
         	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
 			Vector3  first_velocity =  - 5 *(currentPosition -  transform.position);
 			first_velocity.y = 0.5f;
 			this.rigidbody.velocity = first_velocity;
-			selected = false;
 		}
 	}
 	void SetColor(int x) {
