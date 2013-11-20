@@ -7,6 +7,8 @@ public class Ball : MonoBehaviour {
 	private Vector3 screenPoint;
 	public int hp;
 	public int attack;
+    public bool canUseSpecialSkill;
+    public SpecialSkill ballSpecialSkill;
 	// Use this for initialization
 	void Start () {
 		
@@ -22,11 +24,16 @@ public class Ball : MonoBehaviour {
 		else if (Input.GetMouseButtonUp(0) && selected){
 			GameController.select_ok = false;
 			selected = false;
-			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
-        	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
-			Vector3  first_velocity =  - 5 *(currentPosition -  transform.position);
-			first_velocity.y = 0.5f;
-			this.rigidbody.velocity = first_velocity;
+            if (this.canUseSpecialSkill == false) {
+                Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
+                Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
+                Vector3  first_velocity =  - 5 *(currentPosition -  transform.position);
+                first_velocity.y = 0.5f;
+                this.rigidbody.velocity = first_velocity;
+            }
+            else {
+                ExertSpecialSkill();
+            }
 		}
 	}
 	void SetColor(int x) {
@@ -44,4 +51,8 @@ public class Ball : MonoBehaviour {
 			another_ball.hp = another_ball.hp - this.attack;
 		}
 	}
+    
+    void ExertSpecialSkill() {
+        this.ballSpecialSkill.BringOut(this);
+    }
 }
