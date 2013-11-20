@@ -5,15 +5,16 @@ public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
 	public static bool select_ok = true;
+	public static Color selected_ball_color = Color.red;
 	public GUIText hp_text;
 	//team_A's Ball
-	public GameObject[] a = {null,null,null,null};
+	public GameObject[] a = new GameObject[4];
 	private int[] a_hp = {100,200,300,400};
 	private int[] a_attack = {10,10,10,10};
 	private GUIText[] a_hp_text = new GUIText[4];
 	//team_B's Information
 	public GameObject[] b = new GameObject[4];
-	private int[] b_hp = {100,200,300,400};
+	private int[] b_hp = {10,200,300,400};
 	private int[] b_attack = {20,20,20,20};
 	private GUIText[] b_hp_text = new GUIText[5];
 	//hole's information
@@ -57,7 +58,16 @@ public class  GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (does_all_ball_stop()) {
+		if (does_all_ball_stop() && !select_ok) {
+			if (selected_ball_color == Color.red) {
+				selected_ball_color = Color.blue;
+				Debug.Log("blue");
+			} else {
+				selected_ball_color = Color.red;
+				Debug.Log("red");
+			}
+			//explode the ball whose hp is zero.
+			explode_the_ball();
 			select_ok = true;	
 		}
 		for (int i=0;i<4;i++){
@@ -94,5 +104,18 @@ public class  GameController : MonoBehaviour {
 			}
 		}
 		return true;
+	}
+	//explode the ball whose hp is zero
+	void explode_the_ball(){
+		for(int i = 0;i<4;i++){
+			if (a[i].GetComponent<Ball>().hp <= 0){
+				a[i].renderer.material.color = Color.grey;
+				a[i].rigidbody.velocity = new Vector3(0,40,10);
+			}
+			if (b[i].GetComponent<Ball>().hp <= 0){
+				b[i].renderer.material.color = Color.grey;
+				b[i].rigidbody.velocity = new Vector3(0,40,10);
+			}
+		}
 	}
 }
