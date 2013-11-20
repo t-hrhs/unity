@@ -4,6 +4,7 @@ using System.Collections;
 public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
+	public static bool select_ok = true;
 	public GUIText hp_text;
 	//team_A's Ball
 	public GameObject[] a = new GameObject[4];
@@ -56,6 +57,9 @@ public class  GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (does_all_ball_stop()) {
+			select_ok = true;	
+		}
 		for (int i=0;i<4;i++){
 			if(is_in_a_hole(a[i])) {
 				a[i].transform.position = new Vector3(0,-5,0);
@@ -63,8 +67,6 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(b[i])) {
 				b[i].transform.position = new Vector3(0,-5,0);
 			}
-			//a_hp[i] -= 1;
-			//a_hp_text[i].text = a_hp[i].ToString();
 			a_hp_text[i].text = (a[i].GetComponent<Ball>().hp).ToString();
 			b_hp_text[i].text = (b[i].GetComponent<Ball>().hp).ToString();
 		}
@@ -76,5 +78,21 @@ public class  GameController : MonoBehaviour {
 			}
 		}
 		return false;
+	}
+	//check ball status 
+	bool does_all_ball_stop () {
+		for (int i = 0;i<4;i++){
+			//magic number exsits
+			if(a[i].rigidbody.velocity != Vector3.zero && a[i].transform.position.y > -1) {
+				return false;	
+			}
+		}
+		for (int i = 0;i<4;i++){
+			//magic number exsits
+			if(b[i].rigidbody.velocity != Vector3.zero && b[i].transform.position.y > -1) {
+				return false;	
+			}
+		}
+		return true;
 	}
 }

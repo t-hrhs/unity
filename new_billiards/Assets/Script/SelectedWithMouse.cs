@@ -10,7 +10,10 @@ public class SelectedWithMouse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		get_touched_object_by_mouse();
+		// when all balls stop
+		if (GameController.select_ok)  {
+			get_touched_object_by_mouse();
+		}
 	}
 	//Get mouse information
 	void get_touched_object_by_mouse(){
