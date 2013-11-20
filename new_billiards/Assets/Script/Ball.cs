@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour {
 	private bool selected = false;
 	private Vector3 screenPoint;
 	public int hp;
+	public int attack;
 	// Use this for initialization
 	void Start () {
 		
@@ -19,12 +20,13 @@ public class Ball : MonoBehaviour {
 			SelectedWithMouse.selectedGameObject = null;
 		}
 		else if (Input.GetMouseButtonUp(0) && selected){
+			GameController.select_ok = false;
+			selected = false;
 			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
         	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
 			Vector3  first_velocity =  - 5 *(currentPosition -  transform.position);
 			first_velocity.y = 0.5f;
 			this.rigidbody.velocity = first_velocity;
-			selected = false;
 		}
 	}
 	void SetColor(int x) {
@@ -32,6 +34,14 @@ public class Ball : MonoBehaviour {
 			this.renderer.material.color = Color.red;	
 		} else {
 			this.renderer.material.color = Color.blue;	
+		}
+	}
+	
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.tag == "Ball") {
+			GameObject another_ball_prefab = collision.gameObject;
+			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
+			another_ball.hp = another_ball.hp - this.attack;
 		}
 	}
 }
