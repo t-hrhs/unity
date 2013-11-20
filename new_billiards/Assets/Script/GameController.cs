@@ -4,14 +4,17 @@ using System.Collections;
 public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
+	public static bool select_ok = true;
 	public GUIText hp_text;
 	//team_A's Ball
 	public GameObject[] a = new GameObject[4];
 	public int[] a_hp = {100,200,300,400};
+	public int[] a_attack = {10,10,10,10};
 	public GUIText[] a_hp_text = new GUIText[4];
 	//team_B's Information
 	public GameObject[] b = new GameObject[4];
 	public int[] b_hp = {100,200,300,400};
+	public int[] b_attack = {20,20,20,20};
 	public GUIText[] b_hp_text = new GUIText[4];
 	//hole's information
 	public Vector3[] hall_points = {
@@ -38,6 +41,7 @@ public class  GameController : MonoBehaviour {
 			a[i].renderer.material.color = Color.red;
 			Ball ballscript = a[i].GetComponent<Ball>();
 			ballscript.hp = a_hp[i];
+			ballscript.attack = a_attack[i];
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
@@ -47,11 +51,15 @@ public class  GameController : MonoBehaviour {
 			b[i].renderer.material.color = Color.blue;
 			Ball ballscript = b[i].GetComponent<Ball>();
 			ballscript.hp = b_hp[i];
+			ballscript.attack = b_attack[i];
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (does_all_ball_stop()) {
+			select_ok = true;	
+		}
 		for (int i=0;i<4;i++){
 			if(is_in_a_hole(a[i])) {
 				a[i].transform.position = new Vector3(0,-5,0);
@@ -59,6 +67,8 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(b[i])) {
 				b[i].transform.position = new Vector3(0,-5,0);
 			}
+			a_hp_text[i].text = (a[i].GetComponent<Ball>().hp).ToString();
+			b_hp_text[i].text = (b[i].GetComponent<Ball>().hp).ToString();
 		}
 	}
 	bool is_in_a_hole (GameObject ball) {
@@ -68,5 +78,21 @@ public class  GameController : MonoBehaviour {
 			}
 		}
 		return false;
+	}
+	//check ball status 
+	bool does_all_ball_stop () {
+		for (int i = 0;i<4;i++){
+			//magic number exsits
+			if(a[i].rigidbody.velocity != Vector3.zero && a[i].transform.position.y > -1) {
+				return false;	
+			}
+		}
+		for (int i = 0;i<4;i++){
+			//magic number exsits
+			if(b[i].rigidbody.velocity != Vector3.zero && b[i].transform.position.y > -1) {
+				return false;	
+			}
+		}
+		return true;
 	}
 }
