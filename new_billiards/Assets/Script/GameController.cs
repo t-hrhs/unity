@@ -28,17 +28,17 @@ public class  GameController : MonoBehaviour {
 	};
 	
 	//my original method
-	GameObject make_ball(int x, int z) {
-		return Instantiate(ball_prefab, new Vector3(x,0.5f,z),Quaternion.identity) as GameObject;
+	GameObject make_ball(int x, double z) {
+		return Instantiate(ball_prefab, new Vector3(x,0.5f,(float)z),Quaternion.identity) as GameObject;
 	}
 	
 	// Use this for initialization
 	void Start () {
 		//team_A's instantiation
 		for (int i=0;i<4;i++){
-			a[i] = this.make_ball(5,i);
+			a[i] = this.make_ball(5,i * 1.5);
 			a_hp_text[i] = Instantiate(hp_text, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
-			//a_hp_text[i].text = a_hp[i].ToString();
+			a_hp_text[i].text = a_hp[i].ToString();
 			a[i].renderer.material.color = Color.red;
 			Ball ballscript = a[i].GetComponent<Ball>();
 			ballscript.hp = a_hp[i];
@@ -46,7 +46,7 @@ public class  GameController : MonoBehaviour {
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
-			b[i] = this.make_ball(-5,i);
+			b[i] = this.make_ball(-5,i * 1.5);
 			b_hp_text[i] = Instantiate(hp_text, new Vector3(0.55f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
 			b_hp_text[i].text = b_hp[i].ToString();
 			b[i].renderer.material.color = Color.blue;
@@ -83,7 +83,7 @@ public class  GameController : MonoBehaviour {
 	}
 	bool is_in_a_hole (GameObject ball) {
 		for (int i=0;i<6;i++){
-			if (Vector3.Distance(ball.transform.position,hall_points[i]) < 1) {
+			if (Vector3.Distance(ball.transform.position,hall_points[i]) < 1 && ball.transform.localScale.x <= 0.8f) {
 				return true;	
 			}
 		}

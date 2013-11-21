@@ -34,7 +34,21 @@ public class Ball : MonoBehaviour {
 		if (collision.gameObject.tag == "Ball" && collision.gameObject.renderer.material.color !=  GameController.selected_ball_color) {
 			GameObject another_ball_prefab = collision.gameObject;
 			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
-			another_ball.hp = another_ball.hp - this.attack;
+			//make the ball small
+			if (another_ball_prefab.transform.localScale.x >= 0.8) {
+				another_ball_prefab.transform.localScale = new Vector3(
+					another_ball_prefab.transform.localScale.x * 0.9f,
+					another_ball_prefab.transform.localScale.y * 0.9f,
+					another_ball_prefab.transform.localScale.z * 0.9f
+					);
+				Debug.Log(another_ball_prefab.transform.localScale.x);
+			}
+			if (another_ball.hp - this.attack > 0){
+				another_ball.hp = another_ball.hp - this.attack;
+
+			} else {
+				another_ball.hp = 0;
+			}
 		}
 	}
 }
