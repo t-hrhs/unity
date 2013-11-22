@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Ball.cs">
     <Files>
       <File FileName="Assets/Script/SelectedWithMouse.cs" Line="1" Column="1" />
-      <File FileName="Assets/Script/Ball.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/Ball.cs" Line="10" Column="2" />
       <File FileName="Assets/Script/GameController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/masashi.mitsusawa/programs/watabe_10/unity/new_billiards/Assets/Script/SpecialSkill2.cs" line="19" />
+      <Breakpoint file="/Users/masashi.mitsusawa/programs/watabe_10/unity/new_billiards/Assets/Script/SpecialSkill.cs" line="19" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
