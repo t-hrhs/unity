@@ -5,7 +5,7 @@ public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
 	public static bool select_ok = true;
-	public static Color selected_ball_color = Color.red;
+	public static string selected_ball_team = "A";
 	public GUIText hp_text;
 	//team_A's Ball
 	public GameObject[] a = new GameObject[4];
@@ -26,6 +26,7 @@ public class  GameController : MonoBehaviour {
 		new Vector3(11.5f,0.5f,5.3f),
 		new Vector3(11.5f,0.5f,-5.3f),
 	};
+	public Texture block_wall;
 	
 	//my original method
 	GameObject make_ball(int x, int z) {
@@ -38,11 +39,13 @@ public class  GameController : MonoBehaviour {
 		for (int i=0;i<4;i++){
 			a[i] = this.make_ball(5,i);
 			a_hp_text[i] = Instantiate(hp_text, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
-			//a_hp_text[i].text = a_hp[i].ToString();
+			a_hp_text[i].text = a_hp[i].ToString();
 			a[i].renderer.material.color = Color.red;
+			//a[i].renderer.material.mainTexture = block_wall;
 			Ball ballscript = a[i].GetComponent<Ball>();
 			ballscript.hp = a_hp[i];
 			ballscript.attack = a_attack[i];
+			ballscript.team = "A";
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
@@ -53,18 +56,19 @@ public class  GameController : MonoBehaviour {
 			Ball ballscript = b[i].GetComponent<Ball>();
 			ballscript.hp = b_hp[i];
 			ballscript.attack = b_attack[i];
+			ballscript.team = "B";
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (does_all_ball_stop() && !select_ok) {
-			if (selected_ball_color == Color.red) {
-				selected_ball_color = Color.blue;
-				Debug.Log("blue");
+			if (selected_ball_team == "A") {
+				selected_ball_team = "B";
+				Debug.Log("B team turn");
 			} else {
-				selected_ball_color = Color.red;
-				Debug.Log("red");
+				selected_ball_team = "A";
+				Debug.Log("A team turn");
 			}
 			//explode the ball whose hp is zero.
 			explode_the_ball();
