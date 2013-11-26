@@ -14,11 +14,13 @@ public class  GameController : MonoBehaviour {
 	private int[] a_hp = {100,200,300,400};
 	private int[] a_attack = {10,10,10,10};
 	private GUIText[] a_hp_text = new GUIText[4];
+	private GUIText[] a_hp_text_max = new GUIText[4];
 	//team_B's Information
 	public GameObject[] b = new GameObject[4];
 	private int[] b_hp = {10,200,300,400};
 	private int[] b_attack = {20,20,20,20};
 	private GUIText[] b_hp_text = new GUIText[5];
+	private GUIText[] b_hp_text_max = new GUIText[4];
 	//hole's information
 	private Vector3[] hall_points = {
 		new Vector3(-11.5f,0.5f,5.3f),
@@ -39,13 +41,14 @@ public class  GameController : MonoBehaviour {
 	void Start () {
 		//turn text instantiation
 		turn_text = Instantiate(turn_text_base, new Vector3(0.20f,0.23f,0),Quaternion.identity) as GUIText;
-		turn_text.guiText.font.material.color = Color.red;
 		turn_text.text = "A team turn";
 		//team_A's instantiation
 		for (int i=0;i<4;i++){
 			a[i] = this.make_ball(5,i);
-			a_hp_text[i] = Instantiate(text_base, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
+			a_hp_text[i] = Instantiate(text_base, new Vector3(0.14f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
+			a_hp_text_max[i] = Instantiate(text_base, new Vector3(0.17f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
 			a_hp_text[i].text = a_hp[i].ToString();
+			a_hp_text_max[i].text = " / " + a_hp[i].ToString();
 			a[i].renderer.material.color = Color.red;
 			//a[i].renderer.material.mainTexture = block_wall;
 			Ball ballscript = a[i].GetComponent<Ball>();
@@ -56,8 +59,10 @@ public class  GameController : MonoBehaviour {
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
 			b[i] = this.make_ball(-5,i);
-			b_hp_text[i] = Instantiate(text_base, new Vector3(0.55f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
+			b_hp_text[i] = Instantiate(text_base, new Vector3(0.58f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
+			b_hp_text_max[i] = Instantiate(text_base, new Vector3(0.61f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
 			b_hp_text[i].text = b_hp[i].ToString();
+			b_hp_text_max[i].text = " / " + b_hp[i].ToString();
 			b[i].renderer.material.color = Color.blue;
 			Ball ballscript = b[i].GetComponent<Ball>();
 			ballscript.hp = b_hp[i];
@@ -86,6 +91,7 @@ public class  GameController : MonoBehaviour {
 	bool is_in_a_hole (GameObject ball) {
 		for (int i=0;i<6;i++){
 			if (Vector3.Distance(ball.transform.position,hall_points[i]) < 1) {
+				ball.GetComponent<Ball>().hp = 0;
 				return true;	
 			}
 		}
