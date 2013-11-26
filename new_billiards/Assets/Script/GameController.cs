@@ -116,11 +116,11 @@ public class  GameController : MonoBehaviour {
 	//explode the ball whose hp is zero
 	void explode_the_ball(){
 		for(int i = 0;i<4;i++){
-			if (a[i].GetComponent<Ball>().hp <= 0){
+			if (a[i].GetComponent<Ball>().hp <= 0 && a[i].transform.position.y > -1){
 				a[i].renderer.material.color = Color.grey;
 				a[i].rigidbody.velocity = new Vector3(0,40,10);
 			}
-			if (b[i].GetComponent<Ball>().hp <= 0){
+			if (b[i].GetComponent<Ball>().hp <= 0 && b[i].transform.position.y > -1){
 				b[i].renderer.material.color = Color.grey;
 				b[i].rigidbody.velocity = new Vector3(0,40,10);
 			}
