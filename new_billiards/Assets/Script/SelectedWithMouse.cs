@@ -21,7 +21,7 @@ public class SelectedWithMouse : MonoBehaviour {
 			Ray ray;
 			RaycastHit hit = new RaycastHit();
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray,out hit) && hit.collider.gameObject.renderer.material.color == GameController.selected_ball_color) {
+			if (Physics.Raycast(ray,out hit) && hit.collider.gameObject.GetComponent<Ball>().team == GameController.selected_ball_team) {
 				selectedGameObject = hit.collider.gameObject;	
 			} else {
 				selectedGameObject = null;	
