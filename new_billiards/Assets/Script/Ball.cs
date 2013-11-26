@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour {
 	private Vector3 screenPoint;
 	public int hp;
 	public int attack;
+	public string team; //temporary a or b
 	// Use this for initialization
 	void Start () {
 		
@@ -15,11 +16,11 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.renderer.material.color ==  GameController.selected_ball_color) {
+		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
 			selected = true;
 			SelectedWithMouse.selectedGameObject = null;
 		}
-		else if (Input.GetMouseButtonUp(0) && selected && this.renderer.material.color ==  GameController.selected_ball_color){
+		else if (Input.GetMouseButtonUp(0) && selected && this.team ==  GameController.selected_ball_team){
 			GameController.select_ok = false;
 			selected = false;
 			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
@@ -31,10 +32,12 @@ public class Ball : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.tag == "Ball" && collision.gameObject.renderer.material.color !=  GameController.selected_ball_color) {
+		if (collision.gameObject.tag == "Ball") {
 			GameObject another_ball_prefab = collision.gameObject;
 			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
-			another_ball.hp = another_ball.hp - this.attack;
+			if (this.team == GameController.selected_ball_team && this.team != another_ball.team) {
+				another_ball.hp = another_ball.hp - this.attack;
+			}
 		}
 	}
 }
