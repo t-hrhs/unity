@@ -6,7 +6,9 @@ public class  GameController : MonoBehaviour {
 	public GameObject ball_prefab;
 	public static bool select_ok = true;
 	public static string selected_ball_team = "A";
-	public GUIText hp_text;
+	public GUIText text_base;
+	public GUIText turn_text_base; 
+	private GUIText turn_text;
 	//team_A's Ball
 	public GameObject[] a = new GameObject[4];
 	private int[] a_hp = {100,200,300,400};
@@ -35,10 +37,14 @@ public class  GameController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		//turn text instantiation
+		turn_text = Instantiate(turn_text_base, new Vector3(0.20f,0.23f,0),Quaternion.identity) as GUIText;
+		turn_text.guiText.font.material.color = Color.red;
+		turn_text.text = "A team turn";
 		//team_A's instantiation
 		for (int i=0;i<4;i++){
 			a[i] = this.make_ball(5,i);
-			a_hp_text[i] = Instantiate(hp_text, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
+			a_hp_text[i] = Instantiate(text_base, new Vector3(0.20f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
 			a_hp_text[i].text = a_hp[i].ToString();
 			a[i].renderer.material.color = Color.red;
 			//a[i].renderer.material.mainTexture = block_wall;
@@ -50,7 +56,7 @@ public class  GameController : MonoBehaviour {
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
 			b[i] = this.make_ball(-5,i);
-			b_hp_text[i] = Instantiate(hp_text, new Vector3(0.55f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
+			b_hp_text[i] = Instantiate(text_base, new Vector3(0.55f+0.07f*i,0.15f,0),Quaternion.identity) as GUIText;
 			b_hp_text[i].text = b_hp[i].ToString();
 			b[i].renderer.material.color = Color.blue;
 			Ball ballscript = b[i].GetComponent<Ball>();
@@ -62,17 +68,9 @@ public class  GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//TODO:first check whether this turn uses the special skill or not
 		if (does_all_ball_stop() && !select_ok) {
-			if (selected_ball_team == "A") {
-				selected_ball_team = "B";
-				Debug.Log("B team turn");
-			} else {
-				selected_ball_team = "A";
-				Debug.Log("A team turn");
-			}
-			//explode the ball whose hp is zero.
-			explode_the_ball();
-			select_ok = true;	
+			change_turn();	
 		}
 		for (int i=0;i<4;i++){
 			if(is_in_a_hole(a[i])) {
@@ -121,5 +119,20 @@ public class  GameController : MonoBehaviour {
 				b[i].rigidbody.velocity = new Vector3(0,40,10);
 			}
 		}
+	}
+	//change the turn
+	void change_turn() {
+		if (selected_ball_team == "A") {
+			selected_ball_team = "B";
+			turn_text.text = "B team turn";
+			//Debug.Log("B team turn");
+		} else {
+			selected_ball_team = "A";
+			turn_text.text = "A team turn";
+			//Debug.Log("A team turn");
+		}
+		//explode the ball whose hp is zero.
+		explode_the_ball();
+		select_ok = true;
 	}
 }
