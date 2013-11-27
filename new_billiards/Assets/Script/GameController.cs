@@ -13,12 +13,14 @@ public class  GameController : MonoBehaviour {
 	public GameObject[] a = new GameObject[4];
 	private int[] a_hp = {100,200,300,400};
 	private int[] a_attack = {10,10,10,10};
+    private int[] a_skill_types = {1,2,3,4};
 	private GUIText[] a_hp_text = new GUIText[4];
 	private GUIText[] a_hp_text_max = new GUIText[4];
 	//team_B's Information
 	public GameObject[] b = new GameObject[4];
 	private int[] b_hp = {10,200,300,400};
 	private int[] b_attack = {20,20,20,20};
+    private int[] b_skill_types = {1,2,3,4};
 	private GUIText[] b_hp_text = new GUIText[5];
 	private GUIText[] b_hp_text_max = new GUIText[4];
 	//hole's information
@@ -55,6 +57,7 @@ public class  GameController : MonoBehaviour {
 			ballscript.hp = a_hp[i];
 			ballscript.attack = a_attack[i];
 			ballscript.team = "A";
+            ballscript.ballSkill.skillType = a_skill_types[i];
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
@@ -68,6 +71,7 @@ public class  GameController : MonoBehaviour {
 			ballscript.hp = b_hp[i];
 			ballscript.attack = b_attack[i];
 			ballscript.team = "B";
+            ballscript.ballSkill.skillType = b_skill_types[i];
 		}
 	}
 	

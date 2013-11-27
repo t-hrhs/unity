@@ -8,7 +8,12 @@ public class Ball : MonoBehaviour {
 	public int hp;
 	public int attack;
 	public string team; //temporary a or b
+	public bool canUseSkill = false;
+    public Skill ballSkill;
 	// Use this for initialization
+    //constants
+    const int SKILL_USABLE_HP_THRESHOLD = 100;
+
 	void Start () {
 		
 	}
@@ -20,6 +25,17 @@ public class Ball : MonoBehaviour {
 			selected = true;
 			SelectedWithMouse.selectedGameObject = null;
 		}
+        else if (this.CanUseSkill() && selected && Input.GetMouseButtonUp(0) && Input.GetKey(KeyCode.A) && this.team == GameController.selected_ball_team) {
+			GameController.select_ok = false;
+            selected = false;
+            // this.SkillUseEffect();
+			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
+        	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
+			Vector3 first_velocity =  - 5 *(currentPosition -  transform.position);
+			first_velocity.y = 0.5f;
+            this.UseSkill(first_velocity);
+            this.canUseSkill = false;
+        }
 		else if (Input.GetMouseButtonUp(0) && selected && this.team ==  GameController.selected_ball_team){
 			GameController.select_ok = false;
 			selected = false;
@@ -40,4 +56,12 @@ public class Ball : MonoBehaviour {
 			}
 		}
 	}
+    public bool CanUseSkill() {
+       return canUseSkill;
+    }
+    void UseSkill (Vector3 first_velocity) {
+        this.ballSkill.BringOut(this, first_velocity);
+        //this.SkillUseEffect();
+    }
+
 }
