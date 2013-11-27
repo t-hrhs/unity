@@ -35,8 +35,8 @@ public class  GameController : MonoBehaviour {
 	public Texture block_wall;
 	
 	//my original method
-	GameObject make_ball(int x, int z) {
-		return Instantiate(ball_prefab, new Vector3(x,0.5f,z),Quaternion.identity) as GameObject;
+	GameObject make_ball(int x, double z) {
+		return Instantiate(ball_prefab, new Vector3(x,0.5f,(float)z),Quaternion.identity) as GameObject;
 	}
 	
 	// Use this for initialization
@@ -110,7 +110,7 @@ public class  GameController : MonoBehaviour {
 	}
 	bool is_in_a_hole (GameObject ball) {
 		for (int i=0;i<6;i++){
-			if (Vector3.Distance(ball.transform.position,hall_points[i]) < 1) {
+			if (Vector3.Distance(ball.transform.position,hall_points[i]) < 1 && ball.transform.localScale.x <= 0.8f) {
 				ball.GetComponent<Ball>().hp = 0;
 				return true;	
 			}
