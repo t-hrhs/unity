@@ -21,6 +21,9 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+        if (this.hp < SKILL_USABLE_HP_THRESHOLD) {
+            this.CanUseSkill = true;
+        }
 		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
 			selected = true;
 			SelectedWithMouse.selectedGameObject = null;
