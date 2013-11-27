@@ -33,12 +33,15 @@ public class  GameController : MonoBehaviour {
 		new Vector3(11.5f,0.5f,-5.3f),
 	};
 	public Texture block_wall;
+    public GameObject ballSkillPrefab;
 	
 	//my original method
 	GameObject make_ball(int x, double z) {
 		return Instantiate(ball_prefab, new Vector3(x,0.5f,(float)z),Quaternion.identity) as GameObject;
 	}
-	
+    GameObject makeBallSkill() {
+        return Instantiate(this.ballSkillPrefab) as GameObject;
+    }
 	// Use this for initialization
 	void Start () {
 		//turn text instantiation
@@ -57,9 +60,11 @@ public class  GameController : MonoBehaviour {
 			ballscript.hp = a_hp[i];
 			ballscript.attack = a_attack[i];
 			ballscript.team = "A";
-            Skill ballSkill = new Skill();
-            ballSkill.skillType = a_skill_types[i];
-            ballscript.ballSkill = ballSkill;
+            ballscript.setSkillType(a_skill_types[i]);
+            GameObject ballSkill_a = makeBallSkill();
+            Skill ballSkillScript = ballSkill_a.GetComponent<Skill>();
+            ballSkillScript.skillType = a_skill_types[i];
+            ballscript.ballSkill = ballSkillScript;
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
@@ -73,10 +78,11 @@ public class  GameController : MonoBehaviour {
 			ballscript.hp = b_hp[i];
 			ballscript.attack = b_attack[i];
 			ballscript.team = "B";
-            Skill ballSkill_b = new Skill();
-            ballSkill_b.skillType = b_skill_types[i];
-            ballscript.ballSkill = ballSkill_b;
-            //ballscript.ballSkill.skillType = b_skill_types[i]; コレにすると落ちるので原因調べる TODO
+            ballscript.setSkillType(b_skill_types[i]);
+            GameObject ballSkill_a = makeBallSkill();
+            Skill ballSkillScript = ballSkill_a.GetComponent<Skill>();
+            ballSkillScript.skillType = a_skill_types[i];
+            ballscript.ballSkill = ballSkillScript;
 		}
 	}
 	

@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
 	public int hp;
 	public int attack;
 	public string team; //temporary a or b
+    public int skillType;
 	public bool canUseSkill = false;
     public Skill ballSkill;
 	// Use this for initialization
@@ -15,7 +16,6 @@ public class Ball : MonoBehaviour {
     const int SKILL_USABLE_HP_THRESHOLD = 100;
 
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -79,5 +79,7 @@ public class Ball : MonoBehaviour {
         this.ballSkill.BringOut(this, first_velocity);
         //this.SkillUseEffect();
     }
-
+    public void setSkillType(int skillType) {
+        this.skillType = skillType;
+    }
 }
