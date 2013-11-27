@@ -57,7 +57,9 @@ public class  GameController : MonoBehaviour {
 			ballscript.hp = a_hp[i];
 			ballscript.attack = a_attack[i];
 			ballscript.team = "A";
-            ballscript.ballSkill.skillType = a_skill_types[i];
+            Skill ballSkill = new Skill();
+            ballSkill.skillType = a_skill_types[i];
+            ballscript.ballSkill = ballSkill;
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
@@ -71,7 +73,10 @@ public class  GameController : MonoBehaviour {
 			ballscript.hp = b_hp[i];
 			ballscript.attack = b_attack[i];
 			ballscript.team = "B";
-            ballscript.ballSkill.skillType = b_skill_types[i];
+            Skill ballSkill_b = new Skill();
+            ballSkill_b.skillType = b_skill_types[i];
+            ballscript.ballSkill = ballSkill_b;
+            //ballscript.ballSkill.skillType = b_skill_types[i]; コレにすると落ちるので原因調べる TODO
 		}
 	}
 	
@@ -88,8 +93,19 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(b[i])) {
 				b[i].transform.position = new Vector3(0,-5,0);
 			}
-			a_hp_text[i].text = (a[i].GetComponent<Ball>().hp).ToString();
-			b_hp_text[i].text = (b[i].GetComponent<Ball>().hp).ToString();
+
+            if(a[i].GetComponent<Ball>().CanUseSkill()) {
+                a_hp_text[i].text = "*";
+                a_hp_text[i].text += (a[i].GetComponent<Ball>().hp).ToString();
+            } else {
+                a_hp_text[i].text = (a[i].GetComponent<Ball>().hp).ToString();
+            }
+            if(b[i].GetComponent<Ball>().CanUseSkill()) {
+                b_hp_text[i].text = "*";
+                b_hp_text[i].text += (b[i].GetComponent<Ball>().hp).ToString();
+            } else {
+                b_hp_text[i].text = (b[i].GetComponent<Ball>().hp).ToString();
+            }
 		}
 	}
 	bool is_in_a_hole (GameObject ball) {

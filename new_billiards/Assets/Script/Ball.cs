@@ -22,7 +22,7 @@ public class Ball : MonoBehaviour {
 	void Update () {
 		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
         if (this.hp < SKILL_USABLE_HP_THRESHOLD) {
-            this.CanUseSkill = true;
+            this.canUseSkill = true;
         }
 		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
 			selected = true;
