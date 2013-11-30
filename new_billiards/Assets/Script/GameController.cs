@@ -4,6 +4,7 @@ using System.Collections;
 public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
+	public GameObject gauge_prefab;
 	public static bool select_ok = true;
 	public static string selected_ball_team = "A";
 	public GUIText text_base;
@@ -11,12 +12,14 @@ public class  GameController : MonoBehaviour {
 	private GUIText turn_text;
 	//team_A's Ball
 	public GameObject[] a = new GameObject[4];
+	public GameObject[] a_gauge = new GameObject[4];
 	private int[] a_hp = {100,200,300,400};
 	private int[] a_attack = {10,10,10,10};
 	private GUIText[] a_hp_text = new GUIText[4];
 	private GUIText[] a_hp_text_max = new GUIText[4];
 	//team_B's Information
 	public GameObject[] b = new GameObject[4];
+	public GameObject[] b_gauge = new GameObject[4];
 	private int[] b_hp = {10,200,300,400};
 	private int[] b_attack = {20,20,20,20};
 	private GUIText[] b_hp_text = new GUIText[5];
@@ -40,33 +43,39 @@ public class  GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//turn text instantiation
-		turn_text = Instantiate(turn_text_base, new Vector3(0.20f,0.23f,0),Quaternion.identity) as GUIText;
+		turn_text = Instantiate(turn_text_base, new Vector3(0.20f,0.38f,0),Quaternion.identity) as GUIText;
 		turn_text.text = "A team turn";
 		//team_A's instantiation
 		for (int i=0;i<4;i++){
 			a[i] = this.make_ball(5,i);
-			a_hp_text[i] = Instantiate(text_base, new Vector3(0.14f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
-			a_hp_text_max[i] = Instantiate(text_base, new Vector3(0.17f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
+			a_hp_text[i] = Instantiate(text_base, new Vector3(0.14f+0.09f*i,0.12f,0),Quaternion.identity) as GUIText;
+			a_hp_text_max[i] = Instantiate(text_base, new Vector3(0.17f+0.09f*i,0.12f,0),Quaternion.identity) as GUIText;
+			a_gauge[i] = Instantiate(gauge_prefab, new Vector3( 14.9f- 4.0f*i,0.5f,12.5f),Quaternion.identity) as GameObject;
 			a_hp_text[i].text = a_hp[i].ToString();
 			a_hp_text_max[i].text = " / " + a_hp[i].ToString();
 			a[i].renderer.material.color = Color.red;
 			//a[i].renderer.material.mainTexture = block_wall;
 			Ball ballscript = a[i].GetComponent<Ball>();
 			ballscript.hp = a_hp[i];
+			ballscript.hp_max = a_hp[i];
 			ballscript.attack = a_attack[i];
+			ballscript.gauge_prefab = a_gauge[i];
 			ballscript.team = "A";
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
 			b[i] = this.make_ball(-5,i);
-			b_hp_text[i] = Instantiate(text_base, new Vector3(0.58f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
-			b_hp_text_max[i] = Instantiate(text_base, new Vector3(0.61f+0.09f*i,0.15f,0),Quaternion.identity) as GUIText;
+			b_hp_text[i] = Instantiate(text_base, new Vector3(0.58f+0.09f*i,0.12f,0),Quaternion.identity) as GUIText;
+			b_hp_text_max[i] = Instantiate(text_base, new Vector3(0.61f+0.09f*i,0.12f,0),Quaternion.identity) as GUIText;
+			b_gauge[i] = Instantiate(gauge_prefab, new Vector3( -4.8f- 4.0f*i,0.5f,12.5f),Quaternion.identity) as GameObject;
 			b_hp_text[i].text = b_hp[i].ToString();
 			b_hp_text_max[i].text = " / " + b_hp[i].ToString();
 			b[i].renderer.material.color = Color.blue;
 			Ball ballscript = b[i].GetComponent<Ball>();
 			ballscript.hp = b_hp[i];
+			ballscript.hp_max = b_hp[i];
 			ballscript.attack = b_attack[i];
+			ballscript.gauge_prefab = b_gauge[i];
 			ballscript.team = "B";
 		}
 	}

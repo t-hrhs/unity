@@ -6,11 +6,13 @@ public class Ball : MonoBehaviour {
 	private bool selected = false;
 	private Vector3 screenPoint;
 	public int hp;
+	public int hp_max;
 	public int attack;
 	public string team; //temporary a or b
+	public GameObject gauge_prefab;
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -37,7 +39,15 @@ public class Ball : MonoBehaviour {
 			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
 			if (this.team == GameController.selected_ball_team && this.team != another_ball.team) {
 				another_ball.hp = another_ball.hp - this.attack;
+				another_ball.update_gauge();
 			}
+		}
+	}
+	void update_gauge() {
+		double rate = (double)this.hp/this.hp_max;
+		this.gauge_prefab.transform.localScale  =  new Vector3(3.5f * (float)rate,0.1f,0.1f);
+		if (rate <= 0.5f) {
+			this.gauge_prefab.renderer.material.color = Color.yellow;
 		}
 	}
 }
