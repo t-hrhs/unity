@@ -38,7 +38,20 @@ public class Ball : MonoBehaviour {
 			GameObject another_ball_prefab = collision.gameObject;
 			Ball another_ball = another_ball_prefab.GetComponent<Ball>();
 			if (this.team == GameController.selected_ball_team && this.team != another_ball.team) {
-				another_ball.hp = another_ball.hp - this.attack;
+            	if (another_ball_prefab.transform.localScale.x >= 0.8) {
+                	another_ball_prefab.transform.localScale = new Vector3(
+                    	another_ball_prefab.transform.localScale.x * 0.9f,
+                        another_ball_prefab.transform.localScale.y * 0.9f,
+                        another_ball_prefab.transform.localScale.z * 0.9f
+                    );
+                    Debug.Log(another_ball_prefab.transform.localScale.x);
+                }
+                if (another_ball.hp > this.attack) {
+				    another_ball.hp = another_ball.hp - this.attack;
+                }
+                else {
+                    another_ball.hp = 0;
+                }
 				another_ball.update_gauge();
 			}
 		}
