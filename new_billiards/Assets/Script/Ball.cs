@@ -17,6 +17,8 @@ public class Ball : MonoBehaviour {
     public int skillType;
 	public bool canUseSkill = false;
     public Skill ballSkill;
+    private float lineLength = 0;
+    private float speed = 50.0f;
 
     const int SKILL_USABLE_HP_THRESHOLD = 100;
 	void Start () {
@@ -42,11 +44,16 @@ public class Ball : MonoBehaviour {
             RaycastHit hit;
             Vector3 hitPosition;
             if (Physics.Raycast(ray, out hit)) {
+                lineLength += Time.deltaTime * speed;
                 GameObject hitObject = hit.transform.gameObject;
                 hitPosition = hitObject.transform.position;
                 this.lineRenderer = GetComponent<LineRenderer>();
-                lineRenderer.SetPosition(0, this.transform.position);
-                lineRenderer.SetPosition(1, hitPosition);
+                lineRenderer.SetWidth(0.1f, 0.1f);
+                lineRenderer.SetColors(Color.red, Color.blue);
+                lineRenderer.renderer.enabled = true;
+                lineRenderer.SetPosition(0, ray.origin);
+                lineRenderer.SetPosition(1, ray.GetPoint(lineLength));
+                Debug.Log(lineRenderer);
             }
 		}
         else if (this.CanUseSkill() && selected && Input.GetMouseButtonUp(0) && Input.GetKey(KeyCode.A) && this.team == GameController.selected_ball_team) {
