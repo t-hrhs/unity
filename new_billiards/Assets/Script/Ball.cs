@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour {
 	public bool canUseSkill = false;
     public Skill ballSkill;
     private float lineLength = 0;
-    private float speed = 50.0f;
+    private float speed = 300.0f;
 
     const int SKILL_USABLE_HP_THRESHOLD = 100;
 	void Start () {
@@ -37,16 +37,20 @@ public class Ball : MonoBehaviour {
         Vector3 first_velocity =  - 5 *(currentPosition -  transform.position);
         first_velocity.y = 0.5f;
 
-		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
-			selected = true;
-			SelectedWithMouse.selectedGameObject = null;
-            ray = new Ray(this.transform.position, first_velocity);
-            RaycastHit hit;
-            Vector3 hitPosition;
-            if (Physics.Raycast(ray, out hit)) {
+
+        if (selected) {
+            if(Input.GetAxis("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0){
+                //Code for action on mouse moving left
+                Debug.Log("Mouse moved");
+                ray = new Ray(this.transform.position, first_velocity);
+                //RaycastHit hit;
+                Vector3 hitPosition;
+                //if (Physics.Raycast(ray, out hit)) {
+                Debug.Log("--------------ray----------------");
+                Debug.Log(ray.origin);
                 lineLength += Time.deltaTime * speed;
-                GameObject hitObject = hit.transform.gameObject;
-                hitPosition = hitObject.transform.position;
+                //GameObject hitObject = hit.transform.gameObject;
+                //hitPosition = hitObject.transform.position;
                 this.lineRenderer = GetComponent<LineRenderer>();
                 lineRenderer.SetWidth(0.1f, 0.1f);
                 lineRenderer.SetColors(Color.red, Color.blue);
@@ -55,8 +59,13 @@ public class Ball : MonoBehaviour {
                 lineRenderer.SetPosition(1, ray.GetPoint(lineLength));
                 Debug.Log(lineRenderer);
             }
+        }
+		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
+			selected = true;
+			SelectedWithMouse.selectedGameObject = null;
 		}
         else if (this.CanUseSkill() && selected && Input.GetMouseButtonUp(0) && Input.GetKey(KeyCode.A) && this.team == GameController.selected_ball_team) {
+            Destroy(this.lineRenderer);
 			GameController.select_ok = false;
             selected = false;
             // this.SkillUseEffect();
@@ -64,6 +73,7 @@ public class Ball : MonoBehaviour {
             this.canUseSkill = false;
         }
 		else if (Input.GetMouseButtonUp(0) && selected && this.team ==  GameController.selected_ball_team){
+            Destroy(this.lineRenderer);
 			GameController.select_ok = false;
 			selected = false;
 			this.rigidbody.velocity = first_velocity;
@@ -81,7 +91,7 @@ public class Ball : MonoBehaviour {
                         another_ball_prefab.transform.localScale.y * 0.9f,
                         another_ball_prefab.transform.localScale.z * 0.9f
                     );
-                    Debug.Log(another_ball_prefab.transform.localScale.x);
+                    //Debug.Log(another_ball_prefab.transform.localScale.x);
                 }
                 if (another_ball.hp > this.attack) {
 				    another_ball.hp = another_ball.hp - this.attack;
