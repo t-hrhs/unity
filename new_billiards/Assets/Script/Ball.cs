@@ -56,7 +56,7 @@ public class Ball : MonoBehaviour {
 			}
 		}
 	}
-	void update_gauge() {
+	public void update_gauge() {
 		double rate = (double)this.hp/this.hp_max;
 		this.gauge_prefab.transform.localScale  =  new Vector3(3.5f * (float)rate,0.1f,0.1f);
 		if (rate <= 0.5f) {

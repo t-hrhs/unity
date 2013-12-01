@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\Ball.cs" />
+     <Compile Include="Assets\Script\Config.cs" />
      <Compile Include="Assets\Script\Decide_First_Velocity.cs" />
      <Compile Include="Assets\Script\GameController.cs" />
      <Compile Include="Assets\Script\Gauge.cs" />
