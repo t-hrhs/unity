@@ -5,6 +5,8 @@ public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
 	public GameObject gauge_prefab;
+    public GameObject ballSkillPrefab;
+
 	public static bool select_ok = true;
 	public static string selected_ball_team = "A";
 	public GUIText text_base;
@@ -15,6 +17,7 @@ public class  GameController : MonoBehaviour {
 	public GameObject[] a_gauge = new GameObject[4];
 	private int[] a_hp = {100,200,300,400};
 	private int[] a_attack = {10,10,10,10};
+    private int[] a_skill_types = {1,2,3,4};
 	private GUIText[] a_hp_text = new GUIText[4];
 	private GUIText[] a_hp_text_max = new GUIText[4];
 	//team_B's Information
@@ -22,6 +25,7 @@ public class  GameController : MonoBehaviour {
 	public GameObject[] b_gauge = new GameObject[4];
 	private int[] b_hp = {10,200,300,400};
 	private int[] b_attack = {20,20,20,20};
+    private int[] b_skill_types = {1,2,3,4};
 	private GUIText[] b_hp_text = new GUIText[5];
 	private GUIText[] b_hp_text_max = new GUIText[4];
 	//hole's information
@@ -39,7 +43,10 @@ public class  GameController : MonoBehaviour {
 	GameObject make_ball(int x, int z) {
 		return Instantiate(ball_prefab, new Vector3(x,0.5f,z),Quaternion.identity) as GameObject;
 	}
-	
+	GameObject makeBallSkill() {
+        return Instantiate(this.ballSkillPrefab) as GameObject;
+    }
+
 	// Use this for initialization
 	void Start () {
 		//turn text instantiation
@@ -61,6 +68,12 @@ public class  GameController : MonoBehaviour {
 			ballscript.attack = a_attack[i];
 			ballscript.gauge_prefab = a_gauge[i];
 			ballscript.team = "A";
+            ballscript.setSkillType(a_skill_types[i]);
+            GameObject ballSkill_a = makeBallSkill();
+            Skill ballSkillScript = ballSkill_a.GetComponent<Skill>();
+            ballSkillScript.skillType = a_skill_types[i];
+            ballscript.ballSkill = ballSkillScript;
+
 		}
 		//team_B's instantiation
 		for (int i=0;i<4;i++){
@@ -77,6 +90,12 @@ public class  GameController : MonoBehaviour {
 			ballscript.attack = b_attack[i];
 			ballscript.gauge_prefab = b_gauge[i];
 			ballscript.team = "B";
+            ballscript.setSkillType(b_skill_types[i]);
+            GameObject ballSkill_a = makeBallSkill();
+            Skill ballSkillScript = ballSkill_a.GetComponent<Skill>();
+            ballSkillScript.skillType = a_skill_types[i];
+            ballscript.ballSkill = ballSkillScript;
+
 		}
 	}
 	
@@ -93,8 +112,18 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(b[i])) {
 				b[i].transform.position = new Vector3(0,-5,0);
 			}
-			a_hp_text[i].text = (a[i].GetComponent<Ball>().hp).ToString();
-			b_hp_text[i].text = (b[i].GetComponent<Ball>().hp).ToString();
+            if(a[i].GetComponent<Ball>().CanUseSkill()) {
+                a_hp_text[i].text = "*";
+                a_hp_text[i].text += (a[i].GetComponent<Ball>().hp).ToString();
+            } else {
+                a_hp_text[i].text = (a[i].GetComponent<Ball>().hp).ToString();
+            }
+            if(b[i].GetComponent<Ball>().CanUseSkill()) {
+                b_hp_text[i].text = "*";
+                b_hp_text[i].text += (b[i].GetComponent<Ball>().hp).ToString();
+            } else {
+                b_hp_text[i].text = (b[i].GetComponent<Ball>().hp).ToString();
+            }
 		}
 	}
 	bool is_in_a_hole (GameObject ball) {

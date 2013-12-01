@@ -11,6 +11,11 @@ public class Ball : MonoBehaviour {
 	public string team; //temporary a or b
 	public GameObject gauge_prefab;
 	// Use this for initialization
+    public int skillType;
+	public bool canUseSkill = false;
+    public Skill ballSkill;
+
+    const int SKILL_USABLE_HP_THRESHOLD = 100;
 	void Start () {
 
 	}
@@ -18,10 +23,25 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+        if (this.hp < SKILL_USABLE_HP_THRESHOLD) {
+            this.canUseSkill = true;
+        }
+
 		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
 			selected = true;
 			SelectedWithMouse.selectedGameObject = null;
 		}
+        else if (this.CanUseSkill() && selected && Input.GetMouseButtonUp(0) && Input.GetKey(KeyCode.A) && this.team == GameController.selected_ball_team) {
+			GameController.select_ok = false;
+            selected = false;
+            // this.SkillUseEffect();
+			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
+        	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
+			Vector3 first_velocity =  - 5 *(currentPosition -  transform.position);
+			first_velocity.y = 0.5f;
+            this.UseSkill(first_velocity);
+            this.canUseSkill = false;
+        }
 		else if (Input.GetMouseButtonUp(0) && selected && this.team ==  GameController.selected_ball_team){
 			GameController.select_ok = false;
 			selected = false;
@@ -63,4 +83,15 @@ public class Ball : MonoBehaviour {
 			this.gauge_prefab.renderer.material.color = Color.yellow;
 		}
 	}
+    public bool CanUseSkill() {
+       return canUseSkill;
+    }
+    void UseSkill (Vector3 first_velocity) {
+        this.ballSkill.BringOut(this, first_velocity);
+        //this.SkillUseEffect();
+    }
+    public void setSkillType(int skillType) {
+        this.skillType = skillType;
+    }
+
 }
