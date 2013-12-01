@@ -6,6 +6,7 @@ public class  GameController : MonoBehaviour {
 	public GameObject ball_prefab;
 	public GameObject gauge_prefab;
     public GameObject ballSkillPrefab;
+    public GameObject shotNavigator;
 
 	public static bool select_ok = true;
 	public static string selected_ball_team = "A";
@@ -112,6 +113,7 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(b[i])) {
 				b[i].transform.position = new Vector3(0,-5,0);
 			}
+            // change the status of the balls
             if(a[i].GetComponent<Ball>().CanUseSkill()) {
                 a_hp_text[i].text = "*";
                 a_hp_text[i].text += (a[i].GetComponent<Ball>().hp).ToString();

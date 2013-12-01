@@ -10,6 +10,9 @@ public class Ball : MonoBehaviour {
 	public int attack;
 	public string team; //temporary a or b
 	public GameObject gauge_prefab;
+    // ray : shot navigation (test);
+    private Ray ray;
+    LineRenderer lineRenderer;
 	// Use this for initialization
     public int skillType;
 	public bool canUseSkill = false;
@@ -27,28 +30,35 @@ public class Ball : MonoBehaviour {
             this.canUseSkill = true;
         }
 
+        Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
+        Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
+        Vector3 first_velocity =  - 5 *(currentPosition -  transform.position);
+        first_velocity.y = 0.5f;
+
 		if (this.gameObject == SelectedWithMouse.selectedGameObject && this.team ==  GameController.selected_ball_team) {
 			selected = true;
 			SelectedWithMouse.selectedGameObject = null;
+            ray = new Ray(this.transform.position, first_velocity);
+            RaycastHit hit;
+            Vector3 hitPosition;
+            if (Physics.Raycast(ray, out hit)) {
+                GameObject hitObject = hit.transform.gameObject;
+                hitPosition = hitObject.transform.position;
+                this.lineRenderer = GetComponent<LineRenderer>();
+                lineRenderer.SetPosition(0, this.transform.position);
+                lineRenderer.SetPosition(1, hitPosition);
+            }
 		}
         else if (this.CanUseSkill() && selected && Input.GetMouseButtonUp(0) && Input.GetKey(KeyCode.A) && this.team == GameController.selected_ball_team) {
 			GameController.select_ok = false;
             selected = false;
             // this.SkillUseEffect();
-			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
-        	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
-			Vector3 first_velocity =  - 5 *(currentPosition -  transform.position);
-			first_velocity.y = 0.5f;
             this.UseSkill(first_velocity);
             this.canUseSkill = false;
         }
 		else if (Input.GetMouseButtonUp(0) && selected && this.team ==  GameController.selected_ball_team){
 			GameController.select_ok = false;
 			selected = false;
-			Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
-        	Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
-			Vector3  first_velocity =  - 5 *(currentPosition -  transform.position);
-			first_velocity.y = 0.5f;
 			this.rigidbody.velocity = first_velocity;
 		}
 	}
