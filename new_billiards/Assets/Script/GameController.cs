@@ -6,6 +6,9 @@ public class  GameController : MonoBehaviour {
 	//Ball Instance Array
 	public GameObject ball_prefab;
 	public GameObject gauge_prefab;
+    public GameObject ballSkillPrefab;
+    public GameObject shotNavigator;
+
 	public static bool select_ok = true;
 	public static string selected_ball_team = "A";
 	public GUIText text_base;
@@ -16,6 +19,9 @@ public class  GameController : MonoBehaviour {
 	public GUIText[] hp_texts = new GUIText[BALL_NUM];
 	public GUIText[] hp_max_texts = new GUIText[BALL_NUM];
 	public GameObject[] gauges = new GameObject[BALL_NUM];
+
+    //We have to change this style.
+    private int[] skill_types = {1,2,3,4,1,2,3,4};
 	//hole's information
 	private Vector3[] hall_points = {
 		new Vector3(-11.5f,0.5f,5.3f),
@@ -60,8 +66,17 @@ public class  GameController : MonoBehaviour {
 			balls[index].renderer.material.color = Color.blue;
 			ballscript.team = "B";
 		}
+        //NOTE - t_hrhs : move skill initialization
+        ballscript.setSkillType(skill_types[index]);
+        GameObject ballSkill = makeBallSkill();
+        Skill ballSkillScript = ballSkill.GetComponent<Skill>();
+        ballSkillScript.skillType = skill_types[index];
+        ballscript.ballSkill = ballSkillScript;
 	}
-	
+	GameObject makeBallSkill() {
+        return Instantiate(this.ballSkillPrefab) as GameObject;
+    }
+
 	// Use this for initialization
 	void Start () {
 		//turn text instantiation
@@ -82,7 +97,13 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(balls[i])) {
 				balls[i].transform.position = new Vector3(0,-5,0);
 			}
-			hp_texts[i].text = (balls[i].GetComponent<Ball>().hp).ToString();
+            // change the status of the balls
+            if(balls[i].GetComponent<Ball>().CanUseSkill()) {
+                hp_texts[i].text = "*";
+                hp_texts[i].text += (balls[i].GetComponent<Ball>().hp).ToString();
+            } else {
+                hp_texts[i].text = (balls[i].GetComponent<Ball>().hp).ToString();
+            }
 		}
 	}
 	bool is_in_a_hole (GameObject ball) {
