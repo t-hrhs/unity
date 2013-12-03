@@ -5,11 +5,8 @@ public class Ball : MonoBehaviour {
 
 	private bool selected = false;
 	private Vector3 screenPoint;
-	public int hp;
-	public int hp_max;
 	public int attack;
 	public string team; //temporary a or b
-	public GameObject gauge_prefab;
     // ray : shot navigation (test);
     private Ray ray;
     LineRenderer lineRenderer;
@@ -17,6 +14,7 @@ public class Ball : MonoBehaviour {
     public int skillType;
 	public bool canUseSkill = false;
     public Skill ballSkill;
+	public int hp_max;
     private float lineLength = 0;
     private float speed = 300.0f;
 
@@ -28,9 +26,10 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        if (this.hp < SKILL_USABLE_HP_THRESHOLD) {
+		//TODO:please change
+        //if (this.hp < SKILL_USABLE_HP_THRESHOLD) {
             this.canUseSkill = true;
-        }
+        //}
 
         Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
         Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
@@ -93,23 +92,15 @@ public class Ball : MonoBehaviour {
                     );
                     //Debug.Log(another_ball_prefab.transform.localScale.x);
                 }
-                if (another_ball.hp > this.attack) {
-				    another_ball.hp = another_ball.hp - this.attack;
-                }
-                else {
-                    another_ball.hp = 0;
-                }
-				another_ball.update_gauge();
+				if (this.team == "A") {
+					GameController.hp_b -=  this.attack;
+				} else {
+					GameController.hp_a -=  this.attack;
+				}
 			}
 		}
 	}
-	public void update_gauge() {
-		double rate = (double)this.hp/this.hp_max;
-		this.gauge_prefab.transform.localScale  =  new Vector3(3.5f * (float)rate,0.1f,0.1f);
-		if (rate <= 0.5f) {
-			this.gauge_prefab.renderer.material.color = Color.yellow;
-		}
-	}
+
     public bool CanUseSkill() {
        return canUseSkill;
     }

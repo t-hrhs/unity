@@ -2,7 +2,16 @@ fileFormatVersion: 2
 guid: 11d1ee7ee4b234e1ba192c402a577a48
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ball_prefab: {instanceID: 0}
+  - gauge_a_prefab: {instanceID: 0}
+  - gauge_b_prefab: {instanceID: 0}
+  - ballSkillPrefab: {instanceID: 0}
+  - shotNavigator: {instanceID: 0}
+  - text_a: {instanceID: 0}
+  - text_b: {instanceID: 0}
+  - turn_text_base: {instanceID: 0}
+  - block_wall: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

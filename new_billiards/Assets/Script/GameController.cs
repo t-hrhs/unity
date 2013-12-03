@@ -5,20 +5,24 @@ public class  GameController : MonoBehaviour {
 	const int BALL_NUM = 8;
 	//Ball Instance Array
 	public GameObject ball_prefab;
-	public GameObject gauge_prefab;
+	public GameObject gauge_a_prefab;
+	public GameObject gauge_b_prefab;
     public GameObject ballSkillPrefab;
     public GameObject shotNavigator;
 
 	public static bool select_ok = true;
 	public static string selected_ball_team = "A";
-	public GUIText text_base;
+	public GUIText text_a;
+	public GUIText text_b;
 	public GUIText turn_text_base; 
 	private GUIText turn_text;
 
 	public GameObject[] balls = new GameObject[BALL_NUM];
-	public GUIText[] hp_texts = new GUIText[BALL_NUM];
-	public GUIText[] hp_max_texts = new GUIText[BALL_NUM];
-	public GameObject[] gauges = new GameObject[BALL_NUM];
+
+	public static int hp_a;
+	public static int hp_b;
+	public static int hp_a_max;
+	public static int hp_b_max;
 
     //We have to change this style.
     private int[] skill_types = {1,2,3,4,1,2,3,4};
@@ -40,29 +44,17 @@ public class  GameController : MonoBehaviour {
 			new Vector3((float)Config.ball_data[index]["x"],(float)Config.ball_data[index]["y"],(float)Config.ball_data[index]["z"]),
 			Quaternion.identity
 		) as GameObject;
-		hp_texts[index] = Instantiate(
-			text_base,
-			new Vector3((float)Config.ball_data[index]["hp_x"],(float)Config.ball_data[index]["hp_y"],0),Quaternion.identity
-		) as GUIText;
-		hp_max_texts[index] = Instantiate(
-			text_base,
-			new Vector3((float)Config.ball_data[index]["hp_x"] + 0.03f,(float)Config.ball_data[index]["hp_y"],0),Quaternion.identity
-		) as GUIText;
-		gauges[index] = Instantiate(
-			gauge_prefab,
-			new Vector3((float)Config.ball_data[index]["gauge_x"],(float)Config.ball_data[index]["gauge_y"],(float)Config.ball_data[index]["gauge_z"]),Quaternion.identity
-		) as GameObject;
-		hp_texts[index].text = ((float)Config.ball_data[index]["hp"]).ToString();
-		hp_max_texts[index].text = " / " + ((float)Config.ball_data[index]["hp"]).ToString();
 		Ball ballscript = balls[index].GetComponent<Ball>();
-		ballscript.hp = (int)Config.ball_data[index]["hp"];
 		ballscript.hp_max = (int)Config.ball_data[index]["hp"];
 		ballscript.attack = (int)Config.ball_data[index]["attack"];
-		ballscript.gauge_prefab = gauges[index];
 		if (index < 4){
+			hp_a  += (int)Config.ball_data[index]["hp"];
+			hp_a_max += (int)Config.ball_data[index]["hp"];
 			balls[index].renderer.material.color = Color.red;
 			ballscript.team = "A";
 		} else {
+			hp_b  += (int)Config.ball_data[index]["hp"];
+			hp_b_max  += (int)Config.ball_data[index]["hp"];
 			balls[index].renderer.material.color = Color.blue;
 			ballscript.team = "B";
 		}
@@ -73,6 +65,7 @@ public class  GameController : MonoBehaviour {
         ballSkillScript.skillType = skill_types[index];
         ballscript.ballSkill = ballSkillScript;
 	}
+
 	GameObject makeBallSkill() {
         return Instantiate(this.ballSkillPrefab) as GameObject;
     }
@@ -82,6 +75,8 @@ public class  GameController : MonoBehaviour {
 		//turn text instantiation
 		turn_text = Instantiate(turn_text_base, new Vector3(0.20f,0.38f,0),Quaternion.identity) as GUIText;
 		turn_text.text = "A team turn";
+		gauge_a_prefab = Instantiate(this.gauge_a_prefab) as GameObject;
+		gauge_b_prefab = Instantiate(this.gauge_b_prefab) as GameObject;
 		for (int i=0;i<BALL_NUM;i++){
 			this.make_ball(i);
 		}
@@ -89,6 +84,7 @@ public class  GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		 update_gauge();
 		//TODO:first check whether this turn uses the special skill or not
 		if (does_all_ball_stop() && !select_ok) {
 			change_turn();	
@@ -97,20 +93,20 @@ public class  GameController : MonoBehaviour {
 			if(is_in_a_hole(balls[i])) {
 				balls[i].transform.position = new Vector3(0,-5,0);
 			}
-            // change the status of the balls
+            // TODO : show ball status whether ball can use skill or not by another way
+			/* 
             if(balls[i].GetComponent<Ball>().CanUseSkill()) {
                 hp_texts[i].text = "*";
                 hp_texts[i].text += (balls[i].GetComponent<Ball>().hp).ToString();
             } else {
                 hp_texts[i].text = (balls[i].GetComponent<Ball>().hp).ToString();
-            }
+            }*/
 		}
 	}
 	bool is_in_a_hole (GameObject ball) {
 		for (int i=0;i<6;i++){
 			if (Vector3.Distance(ball.transform.position,hall_points[i]) < 1 && ball.transform.localScale.x <= 0.8f) {
-				ball.GetComponent<Ball>().hp = 0;
-				ball.GetComponent<Ball>().update_gauge();
+				update_gauge();
 				return true;	
 			}
 		}
@@ -126,14 +122,14 @@ public class  GameController : MonoBehaviour {
 		return true;
 	}
 	//explode the ball whose hp is zero
-	void explode_the_ball(){
+	/*void explode_the_ball(){
 		for(int i = 0;i<BALL_NUM;i++){
 			if (balls[i].GetComponent<Ball>().hp <= 0 && balls[i].transform.position.y > -1){
 				balls[i].renderer.material.color = Color.grey;
 				balls[i].rigidbody.velocity = new Vector3(0,40,10);
 			}
 		}
-	}
+	}*/
 	//change the turn
 	void change_turn() {
 		if (selected_ball_team == "A") {
@@ -144,7 +140,20 @@ public class  GameController : MonoBehaviour {
 			turn_text.text = "A team turn";
 		}
 		//explode the ball whose hp is zero.
-		explode_the_ball();
+		//explode_the_ball();
 		select_ok = true;
+	}
+
+	public void update_gauge() {
+		double rate = (double)hp_a/hp_a_max;
+		this.gauge_a_prefab.transform.localScale  =  new Vector3 (0.1f,0.1f,14.5f * (float)rate);
+		if (rate <= 0.5f) {
+			this.gauge_a_prefab.renderer.material.color = Color.yellow;
+		}
+		rate = (double)hp_b/hp_b_max;
+		this.gauge_b_prefab.transform.localScale  =  new Vector3 (0.1f,0.1f,14.5f * (float)rate);
+		if (rate <= 0.5f) {
+			this.gauge_b_prefab.renderer.material.color = Color.yellow;
+		}
 	}
 }
