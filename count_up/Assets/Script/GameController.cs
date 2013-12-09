@@ -5,6 +5,9 @@ public class GameController : MonoBehaviour {
 	private const int ball_num = 4; //the number of default ball is FOUR
 	public GameObject ball_prefab; //basic of ball;
 	public GameObject[] balls = new GameObject[ball_num];
+	public static int turn = 15;
+	public static int score = 0;
+	public Rect position = new Rect (240, 275, 200, 15);
 
 	//make a ball
 	void make_a_ball(int index) {
@@ -28,6 +31,21 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		GameObject score_text = GameObject.Find("Score_Text");
+		TextMesh tm = (TextMesh)score_text.GetComponent("TextMesh");
+		tm.text = "score : " + score;
+	}
+
+	void OnGUI () {
+		DrawQuad(position, Color.red);
+		//DrawRectangle (position,  Color.red);
+		//GUI.Label (new Rect (200, 25, 100, 30),"test string");
+	}
+	void DrawQuad(Rect position, Color color) {
+		Texture2D texture = new Texture2D(1, 1);
+		texture.SetPixel(0,0,color);
+		texture.Apply();
+		GUI.skin.box.normal.background = texture;
+		GUI.Box(position, GUIContent.none);
 	}
 }
