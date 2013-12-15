@@ -15,7 +15,7 @@ public class Start_Bottuns : MonoBehaviour {
 	void OnGUI () {
 		if(GUI.Button(new Rect(25,90,100,50),"1st STG")) {
 			//Go to the 1st STG
-			Application.LoadLevel("MainGame_1");
+			Application.LoadLevel("main_game_scene_1");
 			Debug.Log("bottun pushed");
 		}
 	}
