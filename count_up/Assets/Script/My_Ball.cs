@@ -18,6 +18,8 @@ public class My_Ball : MonoBehaviour {
 		first_velocity.y = 0.0f;
 		if (Input.GetMouseButtonUp(0)) {
 			this.rigidbody.velocity = first_velocity;
+			GameController.user_touchable = false;
+			GameController.turn--;
 		}
 	}
 }

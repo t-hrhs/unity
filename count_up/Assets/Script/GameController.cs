@@ -5,8 +5,9 @@ public class GameController : MonoBehaviour {
 	private const int ball_num = 4; //the number of default ball is FOUR
 	public GameObject ball_prefab; //basic of ball;
 	public GameObject[] balls = new GameObject[ball_num];
-	public static int turn = 15;
+	public static int turn =  3;
 	public static int score = 0;
+	public static bool user_touchable = true;
 	public Rect position = new Rect (240, 275, 200, 15);
 
 	//make a ball
@@ -31,21 +32,38 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//update the score per function called
 		GameObject score_text = GameObject.Find("Score_Text");
 		TextMesh tm = (TextMesh)score_text.GetComponent("TextMesh");
-		tm.text = "score : " + score;
+		tm.text = "スコア : " + score;
+		GameObject turn_text = GameObject.Find("Turn_Text");
+		TextMesh tm2 = (TextMesh)turn_text.GetComponent("TextMesh");
+		tm2.text = "残りターン数 : " + turn;
+		tm.text = "スコア : " + score;
+		//if all the ball stopped, decrement the number of turn and make user touchable
+		if (does_all_ball_stopped()) {
+			if (turn <= 0) {
+				Application.LoadLevel("result_scene");
+				}
+			user_touchable = true;
+		}
 	}
+    //ボールが全て止まったかどうかのチェック
+    bool does_all_ball_stopped() {
+		GameObject my_ball = GameObject.Find("My_Ball");
+        if (my_ball.rigidbody.velocity == Vector3.zero) {
+            int i;
+            for (i=0;i<ball_num;i++) {
+                if (balls[i].rigidbody.velocity != Vector3.zero && balls[i].transform.position.y > 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
 	void OnGUI () {
-		DrawQuad(position, Color.red);
-		//DrawRectangle (position,  Color.red);
-		//GUI.Label (new Rect (200, 25, 100, 30),"test string");
-	}
-	void DrawQuad(Rect position, Color color) {
-		Texture2D texture = new Texture2D(1, 1);
-		texture.SetPixel(0,0,color);
-		texture.Apply();
-		GUI.skin.box.normal.background = texture;
-		GUI.Box(position, GUIContent.none);
+		//nothing to do
 	}
 }
