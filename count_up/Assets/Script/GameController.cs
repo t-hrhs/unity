@@ -25,6 +25,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		int i = 0;
+		score = 0;
+		user_touchable = true;
 		for (i=0;i<ball_num;i++) {
 			make_a_ball(i);
 		}
@@ -43,7 +45,7 @@ public class GameController : MonoBehaviour {
 		//if all the ball stopped, decrement the number of turn and make user touchable
 		if (does_all_ball_stopped()) {
 			if (turn <= 0) {
-				Application.LoadLevel("result_scene");
+				Application.LoadLevel("challenge_scene");
 				}
 			user_touchable = true;
 		}
