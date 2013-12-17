@@ -9,6 +9,7 @@ public class  GameController : MonoBehaviour {
 	public GUIText text_base;
 	public GUIText turn_text_base; 
 	private GUIText turn_text;
+	
 	//team_A's Ball
 	public GameObject[] a = new GameObject[4];
 	private int[] a_hp = {100,200,300,400};
@@ -30,6 +31,8 @@ public class  GameController : MonoBehaviour {
 		new Vector3(11.5f,0.5f,5.3f),
 		new Vector3(11.5f,0.5f,-5.3f),
 	};
+	public GameObject angularController;
+	public GameObject ballLaunchButton;
 	public Texture block_wall;
 	
 	//my original method
@@ -39,6 +42,9 @@ public class  GameController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		// Angular Controller
+		Instantiate(angularController, new Vector3(1.0f, 2.0f, 10.0f), Quaternion.identity);
+		Instantiate(ballLaunchButton,  new Vector3(10.0f, 2.0f, 10.0f), Quaternion.identity);
 		//turn text instantiation
 		turn_text = Instantiate(turn_text_base, new Vector3(0.20f,0.23f,0),Quaternion.identity) as GUIText;
 		turn_text.text = "A team turn";
