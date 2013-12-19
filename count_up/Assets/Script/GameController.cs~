@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
 		//update the score per function called
         this.ballPosition = GameObject.Find("My_Ball").transform.position;
         AngularController angularControllerScript = angularController.GetComponent<AngularController>();
+        Debug.Log(ballPosition);
         angularControllerScript.originPosition = ballPosition;
 		GameObject score_text = GameObject.Find("Score_Text");
 		TextMesh tm = (TextMesh)score_text.GetComponent("TextMesh");

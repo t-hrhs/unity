@@ -1,0 +1,59 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class AngularController : MonoBehaviour {
+    public float angle = 0.0f;
+    public LineRenderer angularIndicator;   
+    public RaycastHit raycastHit;
+    public GameObject myBall;
+    public Vector3 originPosition;
+
+    private float lineLength = 10.0f;
+    public Ray ray;
+
+	// Use this for initialization
+	void Start () {
+        Instantiate(angularIndicator);
+        angularIndicator.enabled = false;
+        angularIndicator.SetVertexCount(2);
+        angularIndicator.SetWidth(0.1f, 0.1f);
+
+        ray = new Ray(
+                this.originPosition,
+                new Vector3(Mathf.Cos(angle), this.originPosition.y, Mathf.Sin(angle))
+            );
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        if (GameController.user_touchable == true) {
+            Debug.Log(this.originPosition);
+            RenderLine();
+        } else {
+            HideLine();
+        }
+    }
+    void RenderLine() {
+        angularIndicator.enabled = true;
+        angularIndicator.SetVertexCount(2);
+
+        ray = new Ray(
+                this.originPosition,
+                new Vector3(Mathf.Cos(angle), this.originPosition.y, Mathf.Sin(angle))
+            );
+        angularIndicator.SetPosition(0, ray.origin);
+        angularIndicator.SetPosition(1, ray.GetPoint(lineLength));
+
+        /*
+        if (Physics.Raycast(ray, out raycastHit, LENGTH_RAY)) {
+            angularIndicator.enabled = true;
+            angularIndicator.SetPosition(0, myBall.transform.position);
+            angularIndicator.SetPosition(1, raycastHit.point);
+        }
+        */
+	}
+    void HideLine() {
+        angularIndicator.SetVertexCount(0);
+        angularIndicator.enabled = false;
+    }
+}
