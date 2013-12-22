@@ -36,13 +36,14 @@ public class ShotButton : MonoBehaviour {
     
     void OnGUI () {
         //slider
-        shotAngle = GUI.HorizontalSlider(new Rect(50, 350, 360, 20), shotAngle, 0, 360);
-        shotVelocity = GUI.HorizontalSlider(new Rect(50, 380, 360, 20), shotVelocity, 0, 360); 
+        //shotAngle = GUI.HorizontalSlider(new Rect(50, 350, 360, 20), shotAngle, 0, 360);
+		shotAngle = GUI.HorizontalSlider(new Rect(90, 280, 360, 20), shotAngle, 0, 360);
+        shotVelocity = GUI.HorizontalSlider(new Rect(90, 300, 360, 20), shotVelocity, 0, 100); 
         // display
-        GUI.Label(new Rect(450, 350, 100, 20), ((int)shotAngle).ToString());
-        GUI.Label(new Rect(450, 380, 100, 20), ((int)shotVelocity).ToString());
+        GUI.Label(new Rect(460, 280, 100, 20), ((int)shotAngle).ToString());
+        GUI.Label(new Rect(460, 300, 100, 20), ((int)shotVelocity).ToString());
 
-        if (GUI.Button(new Rect(0, 350, 30, 30), "shot")) {
+        if (GUI.Button(new Rect(500, 280, 100, 30), "shot")) {
             myBallScript.Shot(shotVelocity, shotAngle);
         }
     }
