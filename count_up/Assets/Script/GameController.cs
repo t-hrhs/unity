@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameController_1 : MonoBehaviour {
+public class GameController : MonoBehaviour {
 	private const int ball_num = 4; //the number of default ball is FOUR
 	public GameObject ball_prefab; //basic of ball;
 	public GameObject[] balls = new GameObject[ball_num];
