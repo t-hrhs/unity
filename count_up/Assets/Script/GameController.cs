@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
 	public static int turn =  3;
 	public static int score = 0;
 	public static bool user_touchable = true;
+	public static bool is_clear = false;
 	public Rect position = new Rect (240, 275, 200, 15);
 
 	//make a ball
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		turn =  3;
 		int i = 0;
 		for (i=0;i<ball_num;i++) {
 			make_a_ball(i);
@@ -33,13 +35,13 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//update the score per function called
-		GameObject score_text = GameObject.Find("Score_Text");
-		TextMesh tm = (TextMesh)score_text.GetComponent("TextMesh");
-		tm.text = "スコア : " + score;
+		//GameObject score_text = GameObject.Find("Score_Text");
+		//TextMesh tm = (TextMesh)score_text.GetComponent("TextMesh");
+		//tm.text = "スコア : " + score;
 		GameObject turn_text = GameObject.Find("Turn_Text");
 		TextMesh tm2 = (TextMesh)turn_text.GetComponent("TextMesh");
 		tm2.text = "残りターン数 : " + turn;
-		tm.text = "スコア : " + score;
+		//tm.text = "スコア : " + score;
 		//if all the ball stopped, decrement the number of turn and make user touchable
 		if (does_all_ball_stopped()) {
 			if (turn <= 0) {
