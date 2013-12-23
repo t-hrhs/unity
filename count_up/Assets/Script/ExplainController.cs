@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExplainController_1 : MonoBehaviour {
+public class ExplainController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -14,13 +14,15 @@ public class ExplainController_1 : MonoBehaviour {
 	}
 	void OnGUI () {
 		if(GUI.Button(new Rect(100,250,200,50),"Back to the main !!")) {
-			//Go to the 1st STG
+			//Go to the Main STG
 			Application.LoadLevel("start_scene");
 			Debug.Log("bottun pushed");
 		}
 		if(GUI.Button(new Rect(350,250,200,50), "Go to the stage !!")) {
-			//Go to the 1st STG
-			Application.LoadLevel("main_game_scene_1");
+			//Go to the Nth STG
+			string basic_scene_addr = "main_game_scene_";
+			basic_scene_addr += (Config.stage_id + 1).ToString();
+			Application.LoadLevel(basic_scene_addr);
 			Debug.Log("bottun pushed");
 		}
 	}
