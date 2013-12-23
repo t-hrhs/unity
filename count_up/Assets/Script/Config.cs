@@ -6,10 +6,10 @@ using System;
 public static class  Config {
 	//stage_number-1 because of array index
 	public static int stage_id = 0;
-	public static int[] ball_num = {3};
+	public static int[] ball_num = {4,4};
 
 	//index : stage_id
-	public static int[] max_turn = {3,};
+	public static int[] max_turn = {3,4};
 
 	//TODO : too_complicated
 	/*public static Dictionary<int, Dictionary<string, double>>[] all_info = new Dictionary<int, Dictionary<string, double>>[]{
@@ -25,6 +25,12 @@ public static class  Config {
 			new Dictionary<string, double>() {{"x",3.0f},{"y",0.5f},{"z",0.0f},{"color",2.0f}},
 			new Dictionary<string, double>() {{"x",1.0f},{"y",0.5f},{"z",0.0f},{"color",3.0f}},
 			new Dictionary<string, double>() {{"x",-1.0f},{"y",0.5f},{"z",0.0f},{"color",1.0f}},
+		},
+		new Dictionary<string, double>[] {
+			new Dictionary<string, double>() {{"x",5.0f},{"y",0.5f},{"z",0.0f},{"color",1.0f}},
+			new Dictionary<string, double>() {{"x",3.0f},{"y",0.5f},{"z",0.0f},{"color",2.0f}},
+			new Dictionary<string, double>() {{"x",1.0f},{"y",0.5f},{"z",0.0f},{"color",3.0f}},
+			new Dictionary<string, double>() {{"x",-5.0f},{"y",0.5f},{"z",0.0f},{"color",1.0f}},
 		},
 		//{
 			//new Dictionary<string, double>() {{"x",5.0f},{"y",0.5f},{"z",0.0f},{"color",1.0f}},
