@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 	public static bool user_touchable = true;
 	public static bool is_clear = false;
 	public Rect position = new Rect (240, 275, 200, 15);
+	public static int[] clear_num = {0,0,0};
 
 	//make a ball
 	void make_a_ball(int index) {
@@ -43,6 +44,10 @@ public class GameController : MonoBehaviour {
 		for (i=0;i<ball_num;i++) {
 			make_a_ball(i);
 		}
+		// TODO : change the array to hash
+		clear_num[0] = Config.clear_cond[Config.stage_id]["cyan"];
+		clear_num[1] = Config.clear_cond[Config.stage_id]["yellow"];
+		clear_num[2] = Config.clear_cond[Config.stage_id]["red"];
 	}
 	
 	// Update is called once per frame
@@ -57,9 +62,9 @@ public class GameController : MonoBehaviour {
 		//tm.text = "スコア : " + score;
 		//if all the ball stopped, decrement the number of turn and make user touchable
 		if (does_all_ball_stopped()) {
-			if (turn <= 0) {
+			if (turn <= 0 || does_clear()) {
 				Application.LoadLevel("result_scene");
-				}
+			}
 			user_touchable = true;
 		}
 	}
@@ -78,13 +83,24 @@ public class GameController : MonoBehaviour {
         return false;
     }
 
+	bool does_clear() {
+		int i = 0;
+		for (i=0;i<3;i++) {
+			if (clear_num[i] > 0) {
+				return false;
+			}
+		}
+		Config.clear_flag = true;
+		return true;
+	}
+
 	void OnGUI () {
 		Rect rect_blue = new Rect(380,10, 10, 10);
 		style.normal.textColor = Color.white;
-		GUI.Label(rect_blue, "0", style);
+		GUI.Label(rect_blue, clear_num[0].ToString (), style);
 		Rect rect_yellow = new Rect(460,10, 10, 10);
-		GUI.Label(rect_yellow, "0", style);
+		GUI.Label(rect_yellow, clear_num[1].ToString(), style);
 		Rect rect_red = new Rect(540,10, 10, 10);
-		GUI.Label(rect_red, "1", style);
+		GUI.Label(rect_red, clear_num[2].ToString(), style);
 	}
 }

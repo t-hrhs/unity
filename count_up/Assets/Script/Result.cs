@@ -21,10 +21,14 @@ public class Result : MonoBehaviour {
 		//TODO : distinct clear and fail
 		Rect rect = new Rect(5,100, 400, 200);
 		style.normal.textColor = Color.white;
-		GUI.Label(rect, " Congratulation!! YOU CLEARED!!", style);
-
+		if (Config.clear_flag) {
+			GUI.Label(rect, " Congratulation!! YOU CLEARED!!", style);
+		} else {
+			GUI.Label(rect, " Try Again!! YOU FAILED!!", style);
+		}
 		if(GUI.Button(new Rect(100,250,400,50),"Back to the main !!")) {
 			//Go to the 1st STG
+			Config.clear_flag = false;
 			Application.LoadLevel("start_scene");
 			Debug.Log("bottun pushed");
 		}
