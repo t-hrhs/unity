@@ -95,12 +95,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		Rect rect_blue = new Rect(380,10, 10, 10);
+		Rect rect_blue = new Rect(700,10, 10, 10);
 		style.normal.textColor = Color.white;
 		GUI.Label(rect_blue, clear_num[0].ToString (), style);
-		Rect rect_yellow = new Rect(460,10, 10, 10);
+		Rect rect_yellow = new Rect(830,10, 10, 10);
 		GUI.Label(rect_yellow, clear_num[1].ToString(), style);
-		Rect rect_red = new Rect(540,10, 10, 10);
+		Rect rect_red = new Rect(960,10, 10, 10);
 		GUI.Label(rect_red, clear_num[2].ToString(), style);
 	}
 }

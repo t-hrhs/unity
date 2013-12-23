@@ -8,7 +8,7 @@ public class Result : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		style = new GUIStyle();
-		style.fontSize = 40;
+		style.fontSize = 64;
 	}
 	
 	// Update is called once per frame
@@ -19,14 +19,14 @@ public class Result : MonoBehaviour {
 	void OnGUI () {
 		//this time only shows clear.
 		//TODO : distinct clear and fail
-		Rect rect = new Rect(5,100, 400, 200);
+		Rect rect = new Rect(10,230, 400, 200);
 		style.normal.textColor = Color.white;
 		if (Config.clear_flag) {
 			GUI.Label(rect, " Congratulation!! YOU CLEARED!!", style);
 		} else {
 			GUI.Label(rect, " Try Again!! YOU FAILED!!", style);
 		}
-		if(GUI.Button(new Rect(100,250,400,50),"Back to the main !!")) {
+		if(GUI.Button(new Rect(300,500,400,50),"Back to the main !!")) {
 			//Go to the 1st STG
 			Config.clear_flag = false;
 			Application.LoadLevel("start_scene");
