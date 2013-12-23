@@ -18,14 +18,14 @@ public class Ball : MonoBehaviour {
 			this.renderer.material.color = Color.cyan;
 		} else if (index == 1) {
 			this.renderer.material.color = Color.yellow;
-		} else if (index == 2) {
-			this.renderer.material.color = Color.magenta;
+		//} else if (index == 2) {
+		//	this.renderer.material.color = Color.magenta;
 		} else {
 			this.renderer.material.color = Color.red;
 		}
 	}
 	void increment_and_draw_ball() {
-		if (this.color_id == 3) {
+		if (this.color_id == 2) {
 			this.color_id = 0;
 		}
 		else {
