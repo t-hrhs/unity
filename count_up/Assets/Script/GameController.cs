@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 	private int ball_num = 4; //the number of default ball is FOUR
+	private GUIStyle style;
 	public GameObject ball_prefab; //basic of ball;
 	public GameObject[] balls;
 	public static int turn =  3;
@@ -31,6 +32,10 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//GUI Initialization
+		style = new GUIStyle();
+		style.fontSize = 20;
+		//other
 		turn =  Config.max_turn[Config.stage_id];
 		ball_num = Config.ball_num[Config.stage_id];
 		balls = new GameObject[ball_num];
@@ -74,6 +79,12 @@ public class GameController : MonoBehaviour {
     }
 
 	void OnGUI () {
-		//nothing to do
+		Rect rect_blue = new Rect(380,10, 10, 10);
+		style.normal.textColor = Color.white;
+		GUI.Label(rect_blue, "0", style);
+		Rect rect_yellow = new Rect(460,10, 10, 10);
+		GUI.Label(rect_yellow, "0", style);
+		Rect rect_red = new Rect(540,10, 10, 10);
+		GUI.Label(rect_red, "1", style);
 	}
 }
