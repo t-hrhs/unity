@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
-	private const int ball_num = 4; //the number of default ball is FOUR
+	private int ball_num = 4; //the number of default ball is FOUR
 	public GameObject ball_prefab; //basic of ball;
-	public GameObject[] balls = new GameObject[ball_num];
+	public GameObject[] balls;
 	public static int turn =  3;
 	public static int score = 0;
 	public static bool user_touchable = true;
@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		turn =  Config.max_turn[Config.stage_id];
+		ball_num = Config.ball_num[Config.stage_id];
+		balls = new GameObject[ball_num];
 		int i = 0;
 		for (i=0;i<ball_num;i++) {
 			make_a_ball(i);
