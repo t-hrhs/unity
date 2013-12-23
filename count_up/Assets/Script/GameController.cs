@@ -15,17 +15,23 @@ public class GameController : MonoBehaviour {
 	void make_a_ball(int index) {
 		balls[index] = Instantiate (
 			ball_prefab,
-			new Vector3((float)1.0f,(float)0.5f,(float)(5.0f-2.0f*index)),
+			new Vector3(
+				(float)(Config.ball_data[Config.stage_id][index]["x"]),
+				(float)(Config.ball_data[Config.stage_id][index]["y"]),
+				(float)(Config.ball_data[Config.stage_id][index]["z"])
+			),
+			//new Vector3((float)1.0f,(float)0.5f,(float)(5.0f-2.0f*index)),
 			Quaternion.identity
 		) as GameObject;
 		Ball ballscript = balls[index].GetComponent<Ball>();
-		ballscript.color_id = index;
-		ballscript.draw_ball(index);
+		ballscript.color_id =  (int)(Config.ball_data[Config.stage_id][index]["color"]-1);
+		Debug.Log(ballscript.color_id);
+		ballscript.draw_ball((int)(Config.ball_data[Config.stage_id][index]["color"]-1));
 	}
 
 	// Use this for initialization
 	void Start () {
-		turn =  3;
+		turn =  Config.max_turn[Config.stage_id];
 		int i = 0;
 		for (i=0;i<ball_num;i++) {
 			make_a_ball(i);
