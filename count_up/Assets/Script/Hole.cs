@@ -17,6 +17,9 @@ public class Hole : MonoBehaviour {
 		if (collision.gameObject.tag == "Ball") {
 			collision.gameObject.transform.position = new Vector3(0,-5,0);
 			Ball ballscript = collision.gameObject.GetComponent<Ball>();
+			if (GameController.clear_num[ballscript.color_id] > 0) {
+				GameController.clear_num[ballscript.color_id]--;
+			}
 			GameController.score +=  (ballscript.color_id + 1) * GameController.turn;
 		} else if (collision.gameObject.tag == "MyBall") {
 			//My Ball goes back to start position

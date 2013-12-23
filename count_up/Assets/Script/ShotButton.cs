@@ -43,7 +43,8 @@ public class ShotButton : MonoBehaviour {
         GUI.Label(new Rect(460, 280, 100, 20), ((int)shotAngle).ToString());
         GUI.Label(new Rect(460, 300, 100, 20), ((int)shotVelocity).ToString());
 
-        if (GUI.Button(new Rect(500, 280, 100, 30), "shot")) {
+        if (GUI.Button(new Rect(500, 280, 100, 30), "shot") && GameController.user_touchable) {
+			GameController.user_touchable = false;
             myBallScript.Shot(shotVelocity, shotAngle);
         }
     }
