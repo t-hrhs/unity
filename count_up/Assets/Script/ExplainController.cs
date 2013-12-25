@@ -14,12 +14,12 @@ public class ExplainController : MonoBehaviour {
 	}
 	void OnGUI () {
 		GUI.skin = style;
-		if(GUI.Button(new Rect(100, 500,400,50),"Back to the main !!")) {
+		if(GUI.Button(new Rect(100,500,400,50),"Back to the main !!")) {
 			//Go to the Main STG
 			Application.LoadLevel("start_scene");
 			Debug.Log("bottun pushed");
 		}
-		if(GUI.Button(new Rect(550,500,400,50), "Go to the stage !!")) {
+		if(GUI.Button(new Rect(650,500,400,50), "Go to the stage !!")) {
 			//Go to the Nth STG
 			string basic_scene_addr = "main_game_scene_";
 			basic_scene_addr += (Config.stage_id + 1).ToString();
