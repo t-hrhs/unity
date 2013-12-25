@@ -3,7 +3,8 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 	private int ball_num = 4; //the number of default ball is FOUR
-	private GUIStyle style;
+	//private GUIStyle style;
+	public GUISkin style;
 	public GameObject ball_prefab; //basic of ball;
 	public GameObject[] balls;
 	public static int turn =  3;
@@ -34,9 +35,10 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//GUI Initialization
-		style = new GUIStyle();
-		style.fontSize = 20;
+		//style = new GUIStyle();
+		//style.fontSize = 20;
 		//other
+		Config.clear_flag = false;
 		turn =  Config.max_turn[Config.stage_id];
 		ball_num = Config.ball_num[Config.stage_id];
 		balls = new GameObject[ball_num];
@@ -95,12 +97,13 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		Rect rect_blue = new Rect(700,10, 10, 10);
-		style.normal.textColor = Color.white;
-		GUI.Label(rect_blue, clear_num[0].ToString (), style);
-		Rect rect_yellow = new Rect(830,10, 10, 10);
-		GUI.Label(rect_yellow, clear_num[1].ToString(), style);
-		Rect rect_red = new Rect(960,10, 10, 10);
-		GUI.Label(rect_red, clear_num[2].ToString(), style);
+		GUI.skin = style;
+		Rect rect_blue = new Rect(700,10, 40, 40);
+		//style.normal.textColor = Color.white;
+		GUI.Label(rect_blue, clear_num[0].ToString ());
+		Rect rect_yellow = new Rect(830,10, 40, 40);
+		GUI.Label(rect_yellow, clear_num[1].ToString());
+		Rect rect_red = new Rect(960,10, 40, 40);
+		GUI.Label(rect_red, clear_num[2].ToString());
 	}
 }

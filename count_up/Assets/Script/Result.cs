@@ -4,7 +4,7 @@ using System.Collections;
 public class Result : MonoBehaviour {
 	//public GUIStyleState styleState;
 	private GUIStyle style;
-	
+	public GUISkin test;
 	// Use this for initialization
 	void Start () {
 		style = new GUIStyle();
@@ -19,6 +19,7 @@ public class Result : MonoBehaviour {
 	void OnGUI () {
 		//this time only shows clear.
 		//TODO : distinct clear and fail
+		GUI.skin = test;
 		Rect rect = new Rect(10,230, 400, 200);
 		style.normal.textColor = Color.white;
 		if (Config.clear_flag) {
@@ -28,7 +29,7 @@ public class Result : MonoBehaviour {
 		}
 		if(GUI.Button(new Rect(300,500,400,50),"Back to the main !!")) {
 			//Go to the 1st STG
-			Config.clear_flag = false;
+			//Config.clear_flag = false;
 			Application.LoadLevel("start_scene");
 			Debug.Log("bottun pushed");
 		}

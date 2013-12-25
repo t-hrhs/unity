@@ -15,7 +15,8 @@ public class Hole : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		Debug.Log(collision.gameObject.tag);
 		if (collision.gameObject.tag == "Ball") {
-			collision.gameObject.transform.position = new Vector3(0,-5,0);
+			collision.gameObject.rigidbody.velocity = new Vector3(0,0,0);
+			collision.gameObject.transform.position = new Vector3(200,-10,0);
 			Ball ballscript = collision.gameObject.GetComponent<Ball>();
 			if (GameController.clear_num[ballscript.color_id] > 0) {
 				GameController.clear_num[ballscript.color_id]--;
