@@ -26,8 +26,9 @@ public class My_Ball : MonoBehaviour {
 	}
    
     public void Shot(float shotVelocity, float shotAngle) {
-        float shotAngleRadian = shotAngle * Mathf.Deg2Rad;
-        Vector3 firstVelocityUnit = new Vector3(Mathf.Cos(shotAngleRadian), 0.0f, Mathf.Sin(shotAngleRadian));
+        //float shotAngleRadian = shotAngle * Mathf.Deg2Rad;
+		Vector3 firstVelocityUnit = ShotButton.lineDirection.normalized;
+        //Vector3 firstVelocityUnit = new Vector3(Mathf.Cos(shotAngleRadian), 0.0f, Mathf.Sin(shotAngleRadian));
         this.rigidbody.velocity = shotVelocity * firstVelocityUnit;
         GameController.user_touchable = false;
         GameController.turn--;

@@ -20,6 +20,7 @@ public class Result : MonoBehaviour {
 		//this time only shows clear.
 		//TODO : distinct clear and fail
 		GUI.skin = test;
+		GUI.backgroundColor = Color.yellow;
 		Rect rect = new Rect(10,230, 400, 200);
 		style.normal.textColor = Color.white;
 		if (Config.clear_flag) {
@@ -27,7 +28,7 @@ public class Result : MonoBehaviour {
 		} else {
 			GUI.Label(rect, " Try Again!! YOU FAILED!!", style);
 		}
-		if(GUI.Button(new Rect(300,500,400,50),"Back to the main !!")) {
+		if(GUI.Button(new Rect(700,400,400,150),"Back to the main !!")) {
 			//Go to the 1st STG
 			//Config.clear_flag = false;
 			Application.LoadLevel("start_scene");
