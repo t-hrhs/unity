@@ -13,7 +13,7 @@ public class Hole : MonoBehaviour {
 	
 	}
 	void OnCollisionEnter(Collision collision) {
-		Debug.Log(collision.gameObject.tag);
+		/*Debug.Log(collision.gameObject.tag);
 		if (collision.gameObject.tag == "Ball") {
 			collision.gameObject.rigidbody.velocity = new Vector3(0,0,0);
 			collision.gameObject.transform.position = new Vector3(200,-10,0);
@@ -26,6 +26,6 @@ public class Hole : MonoBehaviour {
 			//My Ball goes back to start position
 			collision.gameObject.rigidbody.velocity = new Vector3(0,0,0);
 			collision.gameObject.transform.position = new Vector3((float)-5,(float)0.5f,1);
-		}
+		}*/
 	}
 }

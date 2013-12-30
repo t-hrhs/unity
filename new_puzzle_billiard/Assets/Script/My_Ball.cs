@@ -30,7 +30,7 @@ public class My_Ball : MonoBehaviour {
 		Vector3 firstVelocityUnit = ShotButton.lineDirection.normalized;
         //Vector3 firstVelocityUnit = new Vector3(Mathf.Cos(shotAngleRadian), 0.0f, Mathf.Sin(shotAngleRadian));
         this.rigidbody.velocity = shotVelocity * firstVelocityUnit;
-        GameController.user_touchable = false;
-        GameController.turn--;
+        //GameController.user_touchable = false;
+        //GameController.turn--;
     }
 }
