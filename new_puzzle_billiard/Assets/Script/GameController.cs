@@ -12,10 +12,12 @@ public class GameController : MonoBehaviour {
     //新しいゲームの為の変数
     public BlockControl block_control = null;
     public GameObject BlockPrefab = null;
+    public Material[] block_materials;
 
     // Use this for initialization
     void Start () {
         //パズルを管理するオブジェクトの生成
+        Block.materials = this.block_materials;
         this.block_control = new BlockControl();
         this.block_control.BlockPrefab = this.BlockPrefab;
         this.block_control.game_controller = this;
@@ -30,6 +32,7 @@ public class GameController : MonoBehaviour {
             }
             user_touchable = true;
         }
+        this.block_control.update();
     }
     //ボールが全て止まったかどうかのチェック
     bool does_all_ball_stopped() {

@@ -5,6 +5,7 @@ MonoImporter:
   defaultReferences:
   - style: {fileID: 11400000, guid: 49862ce7133644b9898bb4ac132b86e8, type: 2}
   - ball_prefab: {instanceID: 0}
+  - BlockPrefab: {fileID: 100000, guid: 1f7d7c768c06e42d8acea869e48c38b1, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
