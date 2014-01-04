@@ -102,12 +102,23 @@ public class Block : MonoBehaviour {
                 }
 			break;
         }
+		if (this.rigidbody.velocity.y > 0) {
+			this.rigidbody.velocity = Vector3.zero;
+		}
 	}
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.tag == "MyBall") {
-			//collision.gameObject.renderer.material.color = this.renderer.material.color;
-            this.setColorType(Block.COLOR_TYPE.RED);
-			//this.increment_and_draw_ball();
+			Color my_ball_color = collision.gameObject.renderer.material.color;
+            if (my_ball_color == Color.red) {
+                this.setColorType(Block.COLOR_TYPE.RED);
+            } else if (my_ball_color == Color.yellow) {
+                this.setColorType(Block.COLOR_TYPE.YELLOW);
+            } else {
+                this.setColorType(Block.COLOR_TYPE.CYAN);
+            }
+            collision.gameObject.rigidbody.velocity = Vector3.zero;
+            collision.gameObject.renderer.enabled = false;
+            collision.gameObject.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
 		}
 	}
 }

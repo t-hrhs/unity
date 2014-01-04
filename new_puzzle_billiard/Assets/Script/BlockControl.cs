@@ -12,7 +12,7 @@ public class BlockControl {
     public GameObject BlockPrefab = null;
     //NOTE 暫定的にブロックの個数は固定
     public static int block_num_wide = 6;
-    public static int block_num_height = 10;
+    public static int block_num_height = 20;
     //具体的にblockインスタンスを保持する配列
     public Block[,] blocks;
     //ブロックに関する情報
@@ -95,12 +95,12 @@ public class BlockControl {
         }
     }
 
-    private bool blocks_stop() {
+    public bool blocks_stop() {
         for (int x = 0;x < BlockControl.block_num_wide; x++) {
             for (int y = 0;y < BlockControl.block_num_height;y++) {
                 if (blocks[x,y] != null) {
                     if(blocks[x,y].transform.position.y > 0 && blocks[x,y].rigidbody.velocity.y < -0.1f) {
-                        Debug.Log("block is moving");
+                        //Debug.Log("block is moving");
                         return false;
                     }
                 }
@@ -116,7 +116,6 @@ public class BlockControl {
         return(ret);
     }
     private bool check_connect_sub() {
-        bool is_connect = false;
         int connect_num = 0;
         int[] delete_num = new int[BlockControl.block_num_wide];
         //delete_num = {0,0,0,0,0,0};
@@ -162,6 +161,7 @@ public class BlockControl {
                     }
                 }
             }
+            GameController.erasable_blocks_num = connect_num;
         }
 		return true;
     }

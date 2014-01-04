@@ -3,41 +3,42 @@ using System.Collections;
 
 public class My_Ball : MonoBehaviour {
 	private Vector3 screenPoint;
+    public const int NEXT_BALL_NUM = 3;
+    //次の3つの色を保持しておく
+    public static int[] next_color_ids = new int[NEXT_BALL_NUM];
 	// Use this for initialization
 	void Start () {
-		//this.rigidbody.velocity = new Vector3(0,0,10);
+        //ランダムに選んで欲しい場合
+        color_choice(-1);
+        for (int i = 0; i < NEXT_BALL_NUM;i++) {
+            next_color_ids[i] = Random.Range(0,NEXT_BALL_NUM);
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//decide the first velocity
-		this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-		Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.screenPoint.z);
-		Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
-		Vector3 first_velocity =  - 5 *(currentPosition -  transform.position);
-		first_velocity.y = 0.0f;
+        if (GameController.user_touchable) {
+            this.renderer.enabled = true;
+        }
+        Vector3 first_velocity = 20 * LineRenderObj.lineDirection.normalized;
 		if (Input.GetMouseButtonUp(0)) {
 			this.rigidbody.velocity = first_velocity;
-			//GameController.user_touchable = false;
+			GameController.user_touchable = false;
 			//GameController.turn--;
 		}
 
 	}
-   
-	/*void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.tag == "Block") {
-			//collision.gameObject.renderer.material.color = this.renderer.material.color;
-            ((Block)collision.gameObject).setColorType(Block.COLOR_TYPE.RED);
-			//this.increment_and_draw_ball();
-		}
-	}*/
 
-    public void Shot(float shotVelocity, float shotAngle) {
-        //float shotAngleRadian = shotAngle * Mathf.Deg2Rad;
-		Vector3 firstVelocityUnit = ShotButton.lineDirection.normalized;
-        //Vector3 firstVelocityUnit = new Vector3(Mathf.Cos(shotAngleRadian), 0.0f, Mathf.Sin(shotAngleRadian));
-        this.rigidbody.velocity = shotVelocity * firstVelocityUnit;
-        //GameController.user_touchable = false;
-        //GameController.turn--;
+    private void color_choice(int color_id) {
+        if (color_id == -1) {
+            color_id = Random.Range(0,NEXT_BALL_NUM);
+        }
+        if (color_id == 0) {
+            this.renderer.material.color = Color.cyan;
+        } else if (color_id == 1) {
+            this.renderer.material.color = Color.yellow;
+        } else {
+            this.renderer.material.color = Color.red;
+        }
     }
 }
