@@ -15,12 +15,12 @@ public class ExplainController : MonoBehaviour {
 	void OnGUI () {
 		GUI.skin = style;
 		GUI.backgroundColor = Color.yellow;
-		if(GUI.Button(new Rect(100,450,400,150),"Back to the main !!")) {
+		if(GUI.Button(new Rect(20,900,300,150),"Stage一覧へ")) {
 			//Go to the Main STG
 			Application.LoadLevel("start_scene");
 			Debug.Log("bottun pushed");
 		}
-		if(GUI.Button(new Rect(650,450,400,150), "Go to the stage !!")) {
+		if(GUI.Button(new Rect(335,900,300,150), "崩す")) {
 			//Go to the Nth STG
 			string basic_scene_addr = "main_game_scene_";
 			basic_scene_addr += (Config.stage_id + 1).ToString();

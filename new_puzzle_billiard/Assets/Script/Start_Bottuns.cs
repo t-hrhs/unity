@@ -19,13 +19,13 @@ public class Start_Bottuns : MonoBehaviour {
 		//TODO : move config.cs
 		GUI.skin = style;
 		GUI.backgroundColor = Color.yellow;
-		if(GUI.Button(new Rect(25,200,200,150),"1st STG")) {
+		if(GUI.Button(new Rect(25,400,180,150),"1st STG")) {
 			//Go to the 1st STG
 			Config.stage_id = 0;
 			Application.LoadLevel("explain_stage_1");
 			//Debug.Log("bottun pushed");
 		}
-		if(GUI.Button(new Rect(230,200,200,150),"2nd STG")) {
+		if(GUI.Button(new Rect(210,400,180,150),"2nd STG")) {
 			//Go to the 1st STG
 			Config.stage_id = 1;
 			Application.LoadLevel("explain_stage_2");
