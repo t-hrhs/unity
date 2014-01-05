@@ -51,15 +51,15 @@ public class BlockFeeder {
                 this.init_candidates();
                 Debug.Log("give_up!!");
             }
-            //int max_num = this.get_max_connect_num();
-            //this.erase_candidate_if_not(max_num);
+            int max_num = this.get_max_connect_num();
+            this.erase_candidate_if_not(max_num);
             sel = Random.Range(0, candidates.size());
             if (this.connect_num[(int)candidates[sel]] >= 3) {
                 this.connect_combo_num--;
             }
         } else {
             for (int i = candidates.size() -1; i>=0;i--){
-                if (this.connect_num[(int)candidates[i]] > 3){
+                if (this.connect_num[(int)candidates[i]] > 2){
                     candidates.erase_by_index(i);
                 }
             }
@@ -105,6 +105,13 @@ public class BlockFeeder {
     private void erase_candidate_if_not(int connect_num) {
         for (int i = candidates.size() -1; i >= 0; i--) {
             if (this.connect_num[(int)candidates[i]] != connect_num) {
+                candidates.erase_by_index(i);
+            }
+        }
+    }
+    private void erase_candidate_if_upper(int connect_num) {
+        for (int i = candidates.size() -1; i >= 0; i--) {
+            if (this.connect_num[(int)candidates[i]] >= connect_num) {
                 candidates.erase_by_index(i);
             }
         }

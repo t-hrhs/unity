@@ -23,12 +23,13 @@ public class Result : MonoBehaviour {
 		GUI.backgroundColor = Color.yellow;
 		Rect rect = new Rect(10,230, 400, 200);
 		style.normal.textColor = Color.white;
-		if (Config.clear_flag) {
+        GUI.Label(rect,"1000点獲得!!", style);
+		/*if (Config.clear_flag) {
 			GUI.Label(rect, " Congratulation!! YOU CLEARED!!", style);
 		} else {
 			GUI.Label(rect, " Try Again!! YOU FAILED!!", style);
-		}
-		if(GUI.Button(new Rect(700,400,400,150),"Back to the main !!")) {
+		}*/
+		if(GUI.Button(new Rect(10,900,600,150),"Stage一覧へ")) {
 			//Go to the 1st STG
 			//Config.clear_flag = false;
 			Application.LoadLevel("start_scene");

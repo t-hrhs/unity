@@ -34,8 +34,8 @@ public class GameController : MonoBehaviour {
         if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop()) {
             //ブロックを当ててもこれ以上消せる見込みがないかのチェック
             if (does_clear()) {
-                Debug.Log("FINISH THIS GAME");
-                //Application.LoadLevel("result_scene");
+                //Debug.Log("FINISH THIS GAME");
+                Application.LoadLevel("result_scene");
             }
             user_touchable = true;
         }

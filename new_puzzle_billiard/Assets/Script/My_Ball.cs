@@ -25,10 +25,16 @@ public class My_Ball : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        if (this.transform.position.z > -3.1f || this.transform.position.y < 0) {
+            this.rigidbody.velocity = Vector3.zero;
+            this.renderer.enabled = false;
+            this.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
+        }
         if (!this.renderer.enabled && GameController.user_touchable) {
             this.next_color();
         }
         if (GameController.user_touchable) {
+            this.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
             this.renderer.enabled = true;
         }
         Vector3 first_velocity = 20 * LineRenderObj.lineDirection.normalized;
