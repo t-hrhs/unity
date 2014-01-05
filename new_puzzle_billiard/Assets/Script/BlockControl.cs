@@ -118,7 +118,9 @@ public class BlockControl {
     private bool check_connect_sub() {
         int connect_num = 0;
         int[] delete_num = new int[BlockControl.block_num_wide];
-        //delete_num = {0,0,0,0,0,0};
+		for (int i = 0; i<BlockControl.block_num_wide; i++) {
+			delete_num[i] = 0;
+		}
         int[,] delete_position = new int[BlockControl.block_num_wide,BlockControl.block_num_height];
         this.connect_checker.clearAll();
         for (int y=0;y<BlockControl.block_num_height;y++) {
@@ -138,7 +140,12 @@ public class BlockControl {
                 for (int i = 0;i<connect_block_num;i++) {
                     Block.PlaceIndex index = this.connect_checker.connect_block[i];
                     this.blocks[index.x,index.y].beginVanishAction();
-                    delete_position[index.x,delete_num[index.x]] = index.y - delete_num[index.x];
+					for (int j = 0; j<delete_num[index.x]; j++) {
+						if (delete_position[index.x, j] < index.y) {
+							index.y--;
+						}
+					}
+                    delete_position[index.x,delete_num[index.x]] = index.y;
                     delete_num[index.x]++;
                 }
             }

@@ -117,7 +117,7 @@ public class Block : MonoBehaviour {
                 this.setColorType(Block.COLOR_TYPE.CYAN);
             }
             collision.gameObject.rigidbody.velocity = Vector3.zero;
-            collision.gameObject.renderer.enabled = false;
+            collision.gameObject.renderer.enabled = false;;
             collision.gameObject.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
 		}
 	}

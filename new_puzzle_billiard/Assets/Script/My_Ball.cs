@@ -15,8 +15,19 @@ public class My_Ball : MonoBehaviour {
         }
 	}
 	
+    void next_color() {
+        this.color_choice(next_color_ids[0]);
+        for(int i=1;i<NEXT_BALL_NUM;i++) {
+            next_color_ids[i-1] = next_color_ids[i];
+        }
+        next_color_ids[NEXT_BALL_NUM-1] = Random.Range(0,NEXT_BALL_NUM);
+    }
+
 	// Update is called once per frame
 	void Update () {
+        if (!this.renderer.enabled && GameController.user_touchable) {
+            this.next_color();
+        }
         if (GameController.user_touchable) {
             this.renderer.enabled = true;
         }
