@@ -11,13 +11,8 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (My_Ball.next_color_ids[color_id] == 0) {
-            this.renderer.material.color = Color.cyan;
-        } else if (My_Ball.next_color_ids[color_id] == 1) {
-            this.renderer.material.color = Color.yellow;
-        } else {
-            this.renderer.material.color = Color.red;
-        }
+        this.renderer.material = Block.materials[My_Ball.next_color_ids[color_id]];
+        this.renderer.material.mainTexture = null;
 	}
 	public void draw_ball(int index) {
 		if (index == 0) {

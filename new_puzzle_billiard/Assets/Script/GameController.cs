@@ -29,9 +29,12 @@ public class GameController : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        this.block_control.update();
+        //this.block_control.update();
+        if (!user_touchable || erasable_blocks_num > 0) {
+            this.block_control.update();
+        }
         //ブロックが既に消し終えている事を確認する
-        if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop()) {
+        if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop() && this.block_control.blocks_stop(0.01f)) {
             //ブロックを当ててもこれ以上消せる見込みがないかのチェック
             if (does_clear()) {
                 //Debug.Log("FINISH THIS GAME");
@@ -83,12 +86,13 @@ public class GameController : MonoBehaviour {
                 }
                 else if (this.block_control.blocks[i,1].color_type == this.block_control.blocks[points[0],1].color_type) {
                     return false;
-                }
-                else if (this.block_control.blocks[i,1].color_type == this.block_control.blocks[i,2].color_type) {
-                    return false;
-                }
-                else if (this.block_control.blocks[points[0],1].color_type == this.block_control.blocks[points[0],2].color_type) {
-                    return false;
+                } else {
+                    if (this.block_control.blocks[i,2]!=null && this.block_control.blocks[i,1].color_type == this.block_control.blocks[i,2].color_type) {
+                        return false;
+                    }
+                    else if (this.block_control.blocks[points[0],2]!=null && this.block_control.blocks[points[0],1].color_type == this.block_control.blocks[points[0],2].color_type) {
+                     return false;
+                    }
                 }
             } if (count == 0) {
                 if (this.block_control.blocks[i,1]==null || this.block_control.blocks[i,2]== null || this.block_control.blocks[i,3]== null) {

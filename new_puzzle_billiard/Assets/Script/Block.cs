@@ -19,8 +19,9 @@ public class Block : MonoBehaviour {
         CYAN = 0,
         YELLOW,
         RED,
-        MAGENTA,
+        PURPLE,
         GREEN,
+        MAGENTA,
         PINK, //通常の意図はここまで
         ORANGE,
         GRAY,
@@ -28,7 +29,7 @@ public class Block : MonoBehaviour {
     }
     public static int NORMAL_COLOR_NUM = (int)COLOR_TYPE.MAGENTA;
     public static COLOR_TYPE NORMAL_COLOR_FIRST = COLOR_TYPE.CYAN;
-    public static COLOR_TYPE NORMAL_COLOR_LAST = COLOR_TYPE.RED;
+    public static COLOR_TYPE NORMAL_COLOR_LAST = COLOR_TYPE.GREEN;
     public COLOR_TYPE color_type = (COLOR_TYPE)0;
     public struct PlaceIndex {
         public int x;
@@ -108,16 +109,17 @@ public class Block : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.tag == "MyBall") {
-			Color my_ball_color = collision.gameObject.renderer.material.color;
-            if (my_ball_color == Color.red) {
+			//Color my_ball_color = collision.gameObject.renderer.material.color;
+            /*if (my_ball_color == Color.red) {
                 this.setColorType(Block.COLOR_TYPE.RED);
             } else if (my_ball_color == Color.yellow) {
                 this.setColorType(Block.COLOR_TYPE.YELLOW);
             } else {
                 this.setColorType(Block.COLOR_TYPE.CYAN);
-            }
+            }*/
+            this.setColorType((COLOR_TYPE)My_Ball.current_color_id);
             collision.gameObject.rigidbody.velocity = Vector3.zero;
-            collision.gameObject.renderer.enabled = false;;
+            collision.gameObject.renderer.enabled = false;
             collision.gameObject.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
 		}
 	}
