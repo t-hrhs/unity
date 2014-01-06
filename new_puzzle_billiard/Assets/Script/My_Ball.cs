@@ -3,9 +3,11 @@ using System.Collections;
 
 public class My_Ball : MonoBehaviour {
 	private Vector3 screenPoint;
-    public const int NEXT_BALL_NUM = 3;
+    //ここは本来blockの色と対応させたい
+    public const int NEXT_BALL_NUM = 5;
     //次の3つの色を保持しておく
     public static int[] next_color_ids = new int[NEXT_BALL_NUM];
+    public static int current_color_id = -1;
 	// Use this for initialization
 	void Start () {
         //ランダムに選んで欲しい場合
@@ -50,12 +52,15 @@ public class My_Ball : MonoBehaviour {
         if (color_id == -1) {
             color_id = Random.Range(0,NEXT_BALL_NUM);
         }
-        if (color_id == 0) {
+        current_color_id = color_id;
+        this.renderer.material = Block.materials[color_id];
+        this.renderer.material.mainTexture = null;
+        /*if (color_id == 0) {
             this.renderer.material.color = Color.cyan;
         } else if (color_id == 1) {
             this.renderer.material.color = Color.yellow;
         } else {
             this.renderer.material.color = Color.red;
-        }
+        }*/
     }
 }

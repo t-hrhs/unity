@@ -90,16 +90,16 @@ public class BlockControl {
     public void update() {
         //現在のブロックの状況で連鎖しているかどうかのチェック
         //但し、blockの速度が全て0の場合に限る
-        if (blocks_stop()) {
+        if (blocks_stop(0.1f)) {
             this.CheckConnect();
         }
     }
 
-    public bool blocks_stop() {
+    public bool blocks_stop(float val) {
         for (int x = 0;x < BlockControl.block_num_wide; x++) {
             for (int y = 0;y < BlockControl.block_num_height;y++) {
                 if (blocks[x,y] != null) {
-                    if(blocks[x,y].transform.position.y > 0 && blocks[x,y].rigidbody.velocity.y < -0.1f) {
+                    if(blocks[x,y].transform.position.y > 0 && blocks[x,y].rigidbody.velocity.sqrMagnitude > val) {
                         //Debug.Log("block is moving");
                         return false;
                     }
