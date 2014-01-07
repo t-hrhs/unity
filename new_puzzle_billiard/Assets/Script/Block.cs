@@ -23,6 +23,7 @@ public class Block : MonoBehaviour {
         GREEN,
         MAGENTA,
         PINK, //通常の意図はここまで
+        BLACK,
         ORANGE,
         GRAY,
         NUM,
@@ -117,7 +118,9 @@ public class Block : MonoBehaviour {
             } else {
                 this.setColorType(Block.COLOR_TYPE.CYAN);
             }*/
-            this.setColorType((COLOR_TYPE)My_Ball.current_color_id);
+            if (this.renderer.material.color != Color.black) {
+                this.setColorType((COLOR_TYPE)My_Ball.current_color_id);
+            }
             collision.gameObject.rigidbody.velocity = Vector3.zero;
             collision.gameObject.renderer.enabled = false;
             collision.gameObject.transform.position = new Vector3(-1.1f,0.35f,-12.0f);

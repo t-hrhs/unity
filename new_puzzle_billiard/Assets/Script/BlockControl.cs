@@ -79,18 +79,21 @@ public class BlockControl {
             int j = Random.Range(i+1, places.size());
             places.swap(i,j);
         }
-        this.block_feeder.connect_combo_num = 20;
+        this.block_feeder.connect_combo_num = 10;
         foreach(Block.PlaceIndex place in places) {
             Block block = this.blocks[place.x,place.y];
             block.setColorType(this.block_feeder.getNextColorStart(place.x, place.y));
             block.setVisible(true);
         }
+        blocks[3,4].renderer.material.color = Color.black;
+        blocks[3,4].color_type = (Block.COLOR_TYPE)6;
+        Debug.Log(blocks[3,4].renderer.material.color);
     }
 
     public void update() {
         //現在のブロックの状況で連鎖しているかどうかのチェック
         //但し、blockの速度が全て0の場合に限る
-        if (!GameController.user_touchable && blocks_stop(0.1f)) {
+        if (blocks_stop(0.001f)) {
         //if (!GameController.user_touchable) {
             this.CheckConnect();
         }
@@ -127,7 +130,7 @@ public class BlockControl {
         for (int y=0;y<BlockControl.block_num_height;y++) {
             for (int x = 0;x<BlockControl.block_num_wide;x++) {
                 //Debug.Log(blocks[x,y]);
-                if (this.blocks[x,y]==null || !this.blocks[x,y].isConnectable()) {
+                if (this.blocks[x,y]==null || this.blocks[x,y].renderer.material.color == Color.black || !this.blocks[x,y].isConnectable()) {
                     continue;
                 }
                 //同じ色が並んでいるブロックの数をチェックする

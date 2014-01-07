@@ -49,6 +49,9 @@ public class ConnectChecker {
 			if (this.blocks[x,y] == null) {
 				break;
 			}
+            if (this.blocks[x,y].renderer.material.color == Color.black) {
+                break;
+            }
             //連結対象じゃない(空中にいるとか、非表示中とか)
             //これは今回は使わないはず
             if (!this.blocks[x,y].isConnectable()) {

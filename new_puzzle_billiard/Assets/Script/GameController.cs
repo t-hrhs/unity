@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour {
             this.block_control.update();
         }
         //ブロックが既に消し終えている事を確認する
-        if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop()) { //&& this.block_control.blocks_stop(0.01f)) {
+        if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop() && this.block_control.blocks_stop(0.001f)) {
             //ブロックを当ててもこれ以上消せる見込みがないかのチェック
             if (does_clear()) {
                 //Debug.Log("FINISH THIS GAME");
@@ -43,12 +43,19 @@ public class GameController : MonoBehaviour {
             }
             user_touchable = true;
         }
-        if (!user_touchable) {
-            Debug.Log(user_touchable);
-        }
     }
-
     bool does_clear() {
+        for (int i = 0; i < BlockControl.block_num_wide;i++) {
+            if (this.block_control.blocks[i,0]==null) {
+                continue;
+            }
+            if (this.block_control.blocks[i,0].renderer.material.color == Color.black) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /*bool does_clear() {
         for (int i = 0; i < BlockControl.block_num_wide; i++) {
             int count = 0;
             int[] points = new int[BlockControl.block_num_wide];
@@ -108,7 +115,7 @@ public class GameController : MonoBehaviour {
             }
         }
         return true;
-    }
+    }*/
 
     bool does_ball_stop() {
         GameObject my_ball = GameObject.Find("My_Ball");
