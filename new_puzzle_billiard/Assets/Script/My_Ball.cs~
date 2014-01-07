@@ -13,6 +13,8 @@ public class My_Ball : MonoBehaviour {
     // ダブルタップ判定用
     private bool isDoubleTapStart;
     private float doubleTapTime;
+    private VSlider vslider;
+
 	void Start () {
         //ランダムに選んで欲しい場合
         color_choice(-1);
@@ -33,6 +35,13 @@ public class My_Ball : MonoBehaviour {
 	void Update () {
         Transform floorTransform = GameObject.Find("Floor").transform;
         Vector3 floorPos = floorTransform.position;
+        vslider = GameObject.Find("VSlider").GetComponent<VSlider>(); 
+        float height = vslider.vSliderValue;
+
+        Vector3 MyBallPos = this.transform.position;
+        MyBallPos.y = height + 0.6f;
+        this.transform.position = MyBallPos;
+
         if (this.transform.position.z > -3.1f || this.transform.position.y < 0) {
             this.rigidbody.velocity = Vector3.zero;
             this.renderer.enabled = false;

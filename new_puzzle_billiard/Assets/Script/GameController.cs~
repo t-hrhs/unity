@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
     public GameObject[] balls;
     public static bool user_touchable = true;
     public static bool is_clear = false;
-    public GameObject VSliderPrefab;
+    public GameObject VSliderPrefab ;
     public Rect position = new Rect (240, 275, 200, 15);
     public static int[] clear_num = {0,0,0};
     //新しいゲームの為の変数
