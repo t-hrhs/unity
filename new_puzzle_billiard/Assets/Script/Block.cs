@@ -27,9 +27,9 @@ public class Block : MonoBehaviour {
         GRAY,
         NUM,
     }
-    public static int NORMAL_COLOR_NUM = (int)COLOR_TYPE.MAGENTA;
+    public static int NORMAL_COLOR_NUM = (int)COLOR_TYPE.GREEN;
     public static COLOR_TYPE NORMAL_COLOR_FIRST = COLOR_TYPE.CYAN;
-    public static COLOR_TYPE NORMAL_COLOR_LAST = COLOR_TYPE.GREEN;
+    public static COLOR_TYPE NORMAL_COLOR_LAST = COLOR_TYPE.PURPLE;
     public COLOR_TYPE color_type = (COLOR_TYPE)0;
     public struct PlaceIndex {
         public int x;

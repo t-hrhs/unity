@@ -12,7 +12,7 @@ public class BlockControl {
     public GameObject BlockPrefab = null;
     //NOTE 暫定的にブロックの個数は固定
     public static int block_num_wide = 6;
-    public static int block_num_height = 20;
+    public static int block_num_height = 10;
     //具体的にblockインスタンスを保持する配列
     public Block[,] blocks;
     //ブロックに関する情報
@@ -90,7 +90,8 @@ public class BlockControl {
     public void update() {
         //現在のブロックの状況で連鎖しているかどうかのチェック
         //但し、blockの速度が全て0の場合に限る
-        if (blocks_stop(0.1f)) {
+        if (!GameController.user_touchable && blocks_stop(0.1f)) {
+        //if (!GameController.user_touchable) {
             this.CheckConnect();
         }
     }

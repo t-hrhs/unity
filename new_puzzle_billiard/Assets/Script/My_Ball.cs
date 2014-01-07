@@ -4,7 +4,7 @@ using System.Collections;
 public class My_Ball : MonoBehaviour {
 	private Vector3 screenPoint;
     //ここは本来blockの色と対応させたい
-    public const int NEXT_BALL_NUM = 5;
+    public const int NEXT_BALL_NUM = 4;
     //次の3つの色を保持しておく
     public static int[] next_color_ids = new int[NEXT_BALL_NUM];
     public static int current_color_id = -1;
@@ -35,12 +35,12 @@ public class My_Ball : MonoBehaviour {
         if (!this.renderer.enabled && GameController.user_touchable) {
             this.next_color();
         }
-        if (GameController.user_touchable) {
+        if (GameController.user_touchable && !this.renderer.enabled) {
             this.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
             this.renderer.enabled = true;
         }
-        Vector3 first_velocity = 20 * LineRenderObj.lineDirection.normalized;
 		if (Input.GetMouseButtonUp(0)) {
+            Vector3 first_velocity = 20 * LineRenderObj.lineDirection.normalized;
 			this.rigidbody.velocity = first_velocity;
 			GameController.user_touchable = false;
 			//GameController.turn--;

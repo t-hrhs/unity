@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
     public static int erasable_blocks_num_before = 0;
     // Use this for initialization
     void Start () {
+        //Application.targetFrameRate = 1;
         //パズルを管理するオブジェクトの生成
         Block.materials = this.block_materials;
         this.block_control = new BlockControl();
@@ -30,17 +31,20 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         //this.block_control.update();
-        if (!user_touchable || erasable_blocks_num > 0) {
+        if (!user_touchable) {
             this.block_control.update();
         }
         //ブロックが既に消し終えている事を確認する
-        if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop() && this.block_control.blocks_stop(0.01f)) {
+        if (erasable_blocks_num == 0 && !user_touchable && does_ball_stop()) { //&& this.block_control.blocks_stop(0.01f)) {
             //ブロックを当ててもこれ以上消せる見込みがないかのチェック
             if (does_clear()) {
                 //Debug.Log("FINISH THIS GAME");
                 Application.LoadLevel("result_scene");
             }
             user_touchable = true;
+        }
+        if (!user_touchable) {
+            Debug.Log(user_touchable);
         }
     }
 
