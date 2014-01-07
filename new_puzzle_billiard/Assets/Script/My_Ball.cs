@@ -9,6 +9,11 @@ public class My_Ball : MonoBehaviour {
     public static int[] next_color_ids = new int[NEXT_BALL_NUM];
     public static int current_color_id = -1;
 	// Use this for initialization
+
+    // ダブルタップ判定用
+    private bool isDoubleTapStart;
+    private float doubleTapTime;
+
 	void Start () {
         //ランダムに選んで欲しい場合
         color_choice(-1);
@@ -27,16 +32,18 @@ public class My_Ball : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        Transform floorTransform = GameObject.Find("Floor").transform;
+        Vector3 floorPos = floorTransform.position;
         if (this.transform.position.z > -3.1f || this.transform.position.y < 0) {
             this.rigidbody.velocity = Vector3.zero;
             this.renderer.enabled = false;
-            this.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
+            this.transform.position = new Vector3(-1.1f, floorPos.y + 0.6f,-12.0f);
         }
         if (!this.renderer.enabled && GameController.user_touchable) {
             this.next_color();
         }
         if (GameController.user_touchable && !this.renderer.enabled) {
-            this.transform.position = new Vector3(-1.1f,0.35f,-12.0f);
+            this.transform.position = new Vector3(-1.1f, floorPos.y + 0.6f,-12.0f);
             this.renderer.enabled = true;
         }
 		if (Input.GetMouseButtonUp(0)) {
